@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Queue Management</string>
+
+    <string name="devices">USB Devices</string>
+
+    <string name="room">Quầy</string>
+
+    <string name="sample_text">Khu điều trị theo yêu cầu</string>
+
+
+</resources>

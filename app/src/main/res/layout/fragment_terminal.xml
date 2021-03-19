@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layoutControlPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/controlLineRts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48sp"
+                android:textOff="RTS"
+                android:textOn="RTS" />
+
+            <ToggleButton
+                android:id="@+id/controlLineCts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48sp"
+                android:clickable="false"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textOff="CTS"
+                android:textOn="CTS" />
+
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="6dp" />
+
+            <ToggleButton
+                android:id="@+id/controlLineDtr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48sp"
+                android:textOff="DTR"
+                android:textOn="DTR" />
+
+            <ToggleButton
+                android:id="@+id/controlLineDsr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:minWidth="48sp"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textOff="DSR"
+                android:textOn="DSR" />
+
+            <View
+                android:layout_height="match_parent"
+                android:layout_width="6dp" />
+
+            <ToggleButton
+                android:id="@+id/controlLineCd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:minWidth="48sp"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textOff="CD"
+                android:textOn="CD" />
+
+            <ToggleButton
+                android:id="@+id/controlLineRi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="48sp"
+                android:clickable="false"
+                android:textColor="@android:color/secondary_text_dark"
+                android:textOff="RI"
+                android:textOn="RI" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="?android:attr/listDivider"
+            android:layout_height="2dp" />
+
+        <TextView
+            android:id="@+id/receive_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:freezesText="true"
+            android:gravity="bottom"
+            android:scrollbars="vertical"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:typeface="monospace" />
+
+        <Button
+            android:id="@+id/receive_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Read" />
+
+        <View
+            android:layout_width="match_parent"
+            android:background="?android:attr/listDivider"
+            android:layout_height="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/send_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="text|textNoSuggestions"
+                android:singleLine="true" />
+
+            <ImageButton
+                android:id="@+id/send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_send_white_24dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutCallingNumber"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvDeviceId"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/room"
+            android:textAllCaps="true"
+            android:textSize="128sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/colorHeader"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guidelineHeader"
+            app:layout_constraintBottom_toTopOf="@id/guidelineFooter">
+
+            <TextView
+                android:id="@+id/tvNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/red"
+                android:textSize="200sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvTextReceive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textSize="16sp"
+                tools:text="Receive Text"
+                android:layout_margin="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineFooter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85"/>
+
+        <TextView
+            android:id="@+id/tvRoomName"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/guidelineFooter"
+            android:text="@string/sample_text"
+            android:textSize="54sp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:background="@color/colorHeader"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
