@@ -380,7 +380,10 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
                         OrderAndRoomItem item = new OrderAndRoomItem(receiveStrings[3], direction, room);
                         listItem.add(item);
-                        orderAndRoomAdapter.getDiffer().submitList(listItem);
+                        ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
+                        newListItem.addAll(listItem);
+                        orderAndRoomAdapter.getDiffer().submitList(newListItem);
+
                     } catch (Exception ex){
                         Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
