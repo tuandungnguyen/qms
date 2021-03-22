@@ -134,10 +134,8 @@
 
     </LinearLayout>
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutCallingNumber"
+        android:id="@+id/layoutCounterDisplay"
         android:visibility="gone"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -218,6 +216,89 @@
             android:background="@color/colorHeader"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutMainDisplay"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvRoomName2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/sample_text"
+            android:textAllCaps="true"
+            android:textSize="45sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/colorHeader"
+            app:layout_constraintBottom_toTopOf="@+id/guidelineHeader2"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineHeader2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guidelineHeader2"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <LinearLayout
+                android:id="@+id/layoutMainDisplayHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="64sp"
+                    android:text="@string/calling_number"
+                    android:textColor="@color/red"
+                    android:textAlignment="center"/>
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="64sp"
+                    android:text="@string/calling_room"
+                    android:textAlignment="center"
+                    android:textColor="@color/red"/>
+
+
+
+            </LinearLayout>
+
+           <androidx.recyclerview.widget.RecyclerView
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/layoutMainDisplayHeader"
+               app:layout_constraintBottom_toBottomOf="parent"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:id="@+id/rcvOrders"/>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

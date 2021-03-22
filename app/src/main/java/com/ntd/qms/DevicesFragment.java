@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.ntd.qms.adapter.DeviceAdapter;
 import com.ntd.qms.data.DeviceItem;
+import com.ntd.qms.util.HexDump;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
     private boolean withIoManager = true;
 
     Button btnRefreshDevices, btnBaudRate, btnReadMode, btnSave;
-    EditText edtDeviceID, edtRoomName;
+    EditText edtMaxLine, edtDeviceID, edtRoomName;
     RecyclerView rcvDevices;
 
     SharedPreferences prefs;
@@ -51,12 +53,14 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
 
         rcvDevices = view.findViewById(R.id.rcvDevices);
 
+        edtMaxLine = view.findViewById(R.id.edtMaxLine);
         edtDeviceID = view.findViewById(R.id.edtAndroidBoxID);
         edtRoomName = view.findViewById(R.id.edtHouseName);
 
 
 
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+        edtMaxLine.setText("" + prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1));
         edtDeviceID.setText("" + prefs.getInt(MainActivity.KEY_DEVICE_ID, 1));
         edtRoomName.setText(prefs.getString(MainActivity.KEY_ROOM_NAME, ""));
 
@@ -70,10 +74,12 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
                 Toast.makeText(getActivity(), "Blank field. Can not save", Toast.LENGTH_LONG).show();
             } else {
                 try {
+                    int maxLine = Integer.parseInt(edtMaxLine.getText().toString());
                     int androidBoxID = Integer.parseInt(edtDeviceID.getText().toString());
                     String roomName = edtRoomName.getText().toString();
 
                     SharedPreferences.Editor editor = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    editor.putInt(MainActivity.KEY_LINE_NUMBER, maxLine);
                     editor.putInt(MainActivity.KEY_DEVICE_ID, androidBoxID);
                     editor.putString(MainActivity.KEY_ROOM_NAME, roomName);
                     editor.apply();
@@ -83,7 +89,6 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
                 } catch (Exception ex) {
                     Toast.makeText(getActivity(), "Error when parsing data", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
 
@@ -112,6 +117,7 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
             });
             builder.create().show();
         });
+
 
 
         return view;

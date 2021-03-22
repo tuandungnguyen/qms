@@ -4,8 +4,8 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="17"
-6-->D:\working_space\QueueManagementSystem\usbSerialForAndroid\src\main\AndroidManifest.xml
+6-->D:\Freelancer\qms\usbSerialForAndroid\src\main\AndroidManifest.xml
 7        android:targetSdkVersion="29" />
-7-->D:\working_space\QueueManagementSystem\usbSerialForAndroid\src\main\AndroidManifest.xml
+7-->D:\Freelancer\qms\usbSerialForAndroid\src\main\AndroidManifest.xml
 8
 9</manifest>

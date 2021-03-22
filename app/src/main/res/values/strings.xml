@@ -6,6 +6,14 @@
     <string name="room">Quầy</string>
 
     <string name="sample_text">Khu điều trị theo yêu cầu</string>
+    <string name="max_line">Số dòng hiển thị&#58;</string>
+
+    <string name="config">Cấu hình</string>
+    <string name="config_display">Cấu hình hiển thị</string>
+    <string name="config_usb_serial">Cấu hình giao tiếp USB</string>
+
+    <string name="calling_number">Số Đang Gọi</string>
+    <string name="calling_room">Quầy</string>
 
 
 </resources>

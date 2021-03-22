@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "508548332568",
+    "project_id": "demousb-76eaf",
+    "storage_bucket": "demousb-76eaf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:508548332568:android:010dd0a64767c74537d76d",
+        "android_client_info": {
+          "package_name": "com.ntd.qms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "508548332568-hlkd3utd40s5uksgnjhg6mua33p5e7p0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ntd.qms",
+            "certificate_hash": "763eb993cc6770f3f6b34a65e9e29ca12a6dbde9"
+          }
+        },
+        {
+          "client_id": "508548332568-ooenot68q9i46g08rmlttavkiu3c1aa4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsmPlfSG7GWJAgbpFKMlMYkufEU3aFsns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "508548332568-ooenot68q9i46g08rmlttavkiu3c1aa4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String MY_PREFS_NAME = "shared_pref";
     public static final String KEY_DEVICE_ID = "key_device_id";
     public static final String KEY_ROOM_NAME = "key_room_name";
+    public static final String KEY_LINE_NUMBER = "key_line_number";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -27,14 +27,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.hoho.android.usbserial.util.SerialInputOutputManager;
+import com.ntd.qms.adapter.OrderAndRoomAdapter;
+import com.ntd.qms.data.OrderAndRoomItem;
 import com.ntd.qms.util.HexDump;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.concurrent.Executors;
@@ -59,8 +64,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private Handler mainLooper;
     private TextView receiveText;
 
-    private TextView tvNumber, tvDeviceId, tvRoomName, tvReceiveText;
-    private ConstraintLayout layoutCallingNumber;
+    private TextView tvNumber, tvDeviceId, tvRoomName, tvRoomName2, tvReceiveText;
+    private ConstraintLayout layoutCounterDisplay, layoutMainDisplay;
+
+    private OrderAndRoomAdapter orderAndRoomAdapter;
+    private RecyclerView rcvOrders;
+    ArrayList<OrderAndRoomItem> listItem;
 
     private ControlLines controlLines;
 
@@ -128,8 +137,18 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         tvNumber = view.findViewById(R.id.tvNumber);
         tvDeviceId = view.findViewById(R.id.tvDeviceId);
         tvRoomName = view.findViewById(R.id.tvRoomName);
+        tvRoomName2 = view.findViewById(R.id.tvRoomName2);
         tvReceiveText = view.findViewById(R.id.tvTextReceive);
-        layoutCallingNumber = view.findViewById(R.id.layoutCallingNumber);
+        layoutCounterDisplay = view.findViewById(R.id.layoutCounterDisplay);
+        layoutMainDisplay = view.findViewById(R.id.layoutMainDisplay);
+        rcvOrders = view.findViewById(R.id.rcvOrders);
+
+        orderAndRoomAdapter = new OrderAndRoomAdapter(getActivity());
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
+        rcvOrders.setLayoutManager(layoutManager);
+        rcvOrders.setAdapter(orderAndRoomAdapter);
+
+        listItem = new ArrayList<>();
 
         receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
@@ -151,6 +170,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         tvDeviceId.setText(getActivity().getString(R.string.room) + " " + androidBoxID);
         tvRoomName.setText(roomName);
+        tvRoomName2.setText(roomName);
 
         return view;
     }
@@ -328,15 +348,54 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 //Receive 0,0,0,0 -> Change room number
             }
 
-            if (receiveStrings[0].equals("0") && receiveStrings[1].equals("" + androidBoxID) && receiveStrings[2].equals("103")){
-                tvNumber.setText(receiveStrings[3]);
+            if (receiveStrings[0].equals("0")  && receiveStrings[2].equals("103")){
+
+                if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) == 1) {
+                    //Counter Display
+                    if (layoutCounterDisplay.getVisibility() == View.GONE) {
+                        layoutCounterDisplay.setVisibility(View.VISIBLE);
+                        layoutMainDisplay.setVisibility(View.GONE);
+                    }
+
+                    if (receiveStrings[1].equals("" + androidBoxID))
+                        tvNumber.setText(receiveStrings[3]);
 
 
-                if (layoutCallingNumber.getVisibility() == View.GONE)
-                    layoutCallingNumber.setVisibility(View.VISIBLE);
+                } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1){
+                    //Main Display
+                    if (layoutMainDisplay.getVisibility() == View.GONE) {
+                        layoutMainDisplay.setVisibility(View.VISIBLE);
+                        layoutCounterDisplay.setVisibility(View.GONE);
+                    }
+
+                    //0,1,103,1001,16385,26
+
+                    try {
+                        String res = Integer.toBinaryString(Integer.parseInt(receiveStrings[4]));
+                        while (res.length() < 16){
+                            res += '0';
+                        }
+                        int direction = Integer.parseInt(res.substring(0, 2), 2);
+                        int room = Integer.parseInt(res.substring(9, 16), 2);
+
+                        OrderAndRoomItem item = new OrderAndRoomItem(receiveStrings[3], direction, room);
+                        listItem.add(item);
+                        orderAndRoomAdapter.getDiffer().submitList(listItem);
+                    } catch (Exception ex){
+                        Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                }
+
+
+
+
+
 
             } else if (receiveStrings[0].equals("0") && receiveStrings[1].equals("0")){
-                layoutCallingNumber.setVisibility(View.GONE);
+                layoutCounterDisplay.setVisibility(View.GONE);
             }
         }
 

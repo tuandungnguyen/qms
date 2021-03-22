@@ -17,12 +17,15 @@
     <color name="colorStatusText">#FFDB58</color>
 
 
+
     <color name="colorHeader">#022cff</color>
     <color name="colorFooter">#022cff</color>
     <color name="colorWhite">#ffffff</color>
 
     <color name="white">#ffffff</color>
     <color name="red">#ff0000</color>
+
+    <color name="blue">#022cff</color>
 
     <color name="grey">#5c5c5c</color>
 

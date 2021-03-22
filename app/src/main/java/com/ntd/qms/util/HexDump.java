@@ -1,7 +1,11 @@
 package com.ntd.qms.util;
 
+import android.util.Log;
+
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidParameterException;
+import java.text.DecimalFormat;
+import java.util.Map;
 
 public class HexDump {
 
@@ -58,6 +62,20 @@ public class HexDump {
         }
 
         return result.toString();
+    }
+
+    public static int decToBinary(int number){
+       String res = Integer.toBinaryString(number);
+
+       try {
+           int a = Integer.parseInt(res.substring(0, 2), 2);
+           int b = Integer.parseInt(res.substring(9, 16), 2);
+
+       } catch (Exception ex){
+
+       }
+
+        return 0;
     }
 
     public static String toHexString(byte b) {

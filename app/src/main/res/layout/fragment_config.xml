@@ -12,7 +12,7 @@
         android:layout_height="100dp"
         android:background="@color/colorHeader"
         android:gravity="center"
-        android:text="CONFIG"
+        android:text="@string/config"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="64sp"
@@ -30,49 +30,48 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutConfig"
             android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:background="@drawable/layout_curved_bg"
             android:layout_height="match_parent"
             android:visibility="visible">
 
-
-            <Button
-                android:id="@+id/btnRefreshDevices"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/tvConfigDisplay"
+                android:text="@string/config_display"
+                android:textAllCaps="true"
+                android:textSize="32sp"
+                android:layout_margin="12dp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Refresh Devices"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutAndroidBoxInfo" />
-
-            <Button
-                android:id="@+id/btnBaudRate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Baud Rate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRefreshDevices" />
-
-            <Button
-                android:id="@+id/btnReadMode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Read Mode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnBaudRate" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutAndroidBoxInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:background="@drawable/layout_curved_bg"
                 android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/tvConfigDisplay">
+
+                <TextView
+                    android:id="@+id/tvMaxLine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/max_line"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/edtMaxLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvMaxLine" />
 
                 <TextView
                     android:id="@+id/tvAndroidBox"
@@ -80,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:text="Device ID: "
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@id/edtMaxLine" />
 
                 <EditText
                     android:id="@+id/edtAndroidBoxID"
@@ -108,6 +107,8 @@
                     android:singleLine="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvHouseName" />
+
+
 
                 <Button
                     android:id="@+id/btnSaveDeviceInfo"
@@ -148,13 +149,66 @@
         app:layout_constraintStart_toEndOf="@+id/guidelineCenter"
         app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
 
+        <TextView
+            android:id="@+id/tvConfigUSBSerial"
+            android:text="@string/config_usb_serial"
+            android:textAllCaps="true"
+            android:textSize="32sp"
+            android:layout_margin="12dp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/layoutConfigUSBSerial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfigUSBSerial"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnRefreshDevices"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:layout_margin="8dp"
+                android:text="Refresh Devices" />
+
+            <Button
+                android:id="@+id/btnBaudRate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:lines="2"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content"
+                android:text="Baud Rate" />
+
+            <Button
+                android:id="@+id/btnReadMode"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:lines="2"
+                android:layout_margin="8dp"
+                android:layout_height="wrap_content"
+                android:text="Read Mode" />
+
+        </LinearLayout>
+
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvDevices"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_margin="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutConfigUSBSerial"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
