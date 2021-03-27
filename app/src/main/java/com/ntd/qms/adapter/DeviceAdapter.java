@@ -54,9 +54,9 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
         if(item.getDriver() == null)
             holder.text1.setText("<no driver>");
         else if(item.getDriver().getPorts().size() == 1)
-            holder.text1.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver",""));
+            holder.text1.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver","") + ", Port unknown");
         else
-            holder.text1.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver","")+", Port "+item.getPort());
+            holder.text1.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver","")+", Port " + item.getPort());
 
         holder.text2.setText(String.format(Locale.US, "Vendor %04X, Product %04X", item.getDevice().getVendorId(), item.getDevice().getProductId()));
 

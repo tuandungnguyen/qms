@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -145,31 +147,22 @@
         <TextView
             android:id="@+id/tvDeviceId"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_100"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/room"
             android:textAllCaps="true"
-            android:textSize="128sp"
+            android:textSize="@dimen/sp_45"
             android:gravity="center"
             android:textColor="@color/white"
-            android:background="@color/colorHeader"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineHeader"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.25"/>
-
+            android:background="@color/colorHeader"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guidelineHeader"
-            app:layout_constraintBottom_toTopOf="@id/guidelineFooter">
+            app:layout_constraintTop_toBottomOf="@id/tvDeviceId"
+            app:layout_constraintBottom_toTopOf="@id/tvRoomName">
 
             <TextView
                 android:id="@+id/tvNumber"
@@ -196,20 +189,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineFooter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.85"/>
+
 
         <TextView
             android:id="@+id/tvRoomName"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/guidelineFooter"
+            android:layout_height="@dimen/dp_64"
             android:text="@string/sample_text"
-            android:textSize="54sp"
+            android:textSize="@dimen/sp_45"
             android:gravity="center"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -221,7 +208,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutMainDisplay"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -230,30 +217,21 @@
         <TextView
             android:id="@+id/tvRoomName2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_100"
             app:layout_constraintTop_toTopOf="parent"
             android:text="@string/sample_text"
             android:textAllCaps="true"
-            android:textSize="45sp"
+            android:textSize="@dimen/sp_45"
             android:gravity="center"
             android:textColor="@color/white"
-            android:background="@color/colorHeader"
-            app:layout_constraintBottom_toTopOf="@+id/guidelineHeader2"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineHeader2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.2"/>
-
+            android:background="@color/colorHeader"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guidelineHeader2"
+            app:layout_constraintTop_toBottomOf="@id/tvRoomName2"
             app:layout_constraintBottom_toBottomOf="parent">
 
 
@@ -304,3 +282,4 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+</layout>

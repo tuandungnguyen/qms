@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String KEY_DEVICE_ID = "key_device_id";
     public static final String KEY_ROOM_NAME = "key_room_name";
     public static final String KEY_LINE_NUMBER = "key_line_number";
+    public static final String KEY_BAUD_RATE = "key_baud_rate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         if (savedInstanceState == null)
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment, new DevicesFragment(), "devices").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment, new ConfigFragment(), "devices").commit();
         else
             onBackStackChanged();
     }

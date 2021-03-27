@@ -10,11 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,62 +26,73 @@ import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.ntd.qms.adapter.DeviceAdapter;
 import com.ntd.qms.data.DeviceItem;
+import com.ntd.qms.databinding.FragmentConfigBinding;
 import com.ntd.qms.util.HexDump;
 
 import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class DevicesFragment extends Fragment implements DeviceAdapter.ClickListener{
+public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListener{
+
+    private FragmentConfigBinding binding;
 
     private ArrayList<DeviceItem> listItems = new ArrayList<>();
     private DeviceAdapter deviceAdapter;
     private int baudRate = 38400;
     private boolean withIoManager = true;
 
-    Button btnRefreshDevices, btnBaudRate, btnReadMode, btnSave;
-    EditText edtMaxLine, edtDeviceID, edtRoomName;
-    RecyclerView rcvDevices;
-
     SharedPreferences prefs;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_config, container, false);
-
-        btnRefreshDevices = view.findViewById(R.id.btnRefreshDevices);
-        btnBaudRate = view.findViewById(R.id.btnBaudRate);
-        btnReadMode = view.findViewById(R.id.btnReadMode);
-        btnSave = view.findViewById(R.id.btnSaveDeviceInfo);
-
-        rcvDevices = view.findViewById(R.id.rcvDevices);
-
-        edtMaxLine = view.findViewById(R.id.edtMaxLine);
-        edtDeviceID = view.findViewById(R.id.edtAndroidBoxID);
-        edtRoomName = view.findViewById(R.id.edtHouseName);
-
-
+        binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_config, container, false);
 
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
-        edtMaxLine.setText("" + prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1));
-        edtDeviceID.setText("" + prefs.getInt(MainActivity.KEY_DEVICE_ID, 1));
-        edtRoomName.setText(prefs.getString(MainActivity.KEY_ROOM_NAME, ""));
+
+        binding.edtMaxLine.setText("" + prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1));
+        binding.edtAndroidBoxID.setText("" + prefs.getInt(MainActivity.KEY_DEVICE_ID, 1));
+        binding.edtHouseName.setText(prefs.getString(MainActivity.KEY_ROOM_NAME, ""));
+
+        baudRate = prefs.getInt(MainActivity.KEY_BAUD_RATE, 38400);
 
         deviceAdapter = new DeviceAdapter(getActivity(), this);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
-        rcvDevices.setLayoutManager(layoutManager);
-        rcvDevices.setAdapter(deviceAdapter);
+        binding.rcvDevices.setLayoutManager(layoutManager);
+        binding.rcvDevices.setAdapter(deviceAdapter);
 
-        btnSave.setOnClickListener(view1 -> {
-            if (edtDeviceID.getText().toString().isEmpty() || edtRoomName.getText().toString().isEmpty()){
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.baud_rates, android.R.layout.simple_spinner_item);
+        final String[] valuesBR = getResources().getStringArray(R.array.baud_rates);
+        int posBR = java.util.Arrays.asList(valuesBR).indexOf(String.valueOf(baudRate));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spinnerBaudRate.setAdapter(adapter);
+        binding.spinnerBaudRate.setSelection(posBR, true);
+        binding.spinnerBaudRate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                baudRate = Integer.parseInt(valuesBR[pos]);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt(MainActivity.KEY_BAUD_RATE, baudRate);
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
+            if (binding.edtAndroidBoxID.getText().toString().isEmpty() || binding.edtHouseName.getText().toString().isEmpty()){
                 Toast.makeText(getActivity(), "Blank field. Can not save", Toast.LENGTH_LONG).show();
             } else {
                 try {
-                    int maxLine = Integer.parseInt(edtMaxLine.getText().toString());
-                    int androidBoxID = Integer.parseInt(edtDeviceID.getText().toString());
-                    String roomName = edtRoomName.getText().toString();
+                    int maxLine = Integer.parseInt(binding.edtMaxLine.getText().toString());
+                    int androidBoxID = Integer.parseInt(binding.edtAndroidBoxID.getText().toString());
+                    String roomName = binding.edtHouseName.getText().toString();
 
-                    SharedPreferences.Editor editor = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE).edit();
+                    SharedPreferences.Editor editor = prefs.edit();
                     editor.putInt(MainActivity.KEY_LINE_NUMBER, maxLine);
                     editor.putInt(MainActivity.KEY_DEVICE_ID, androidBoxID);
                     editor.putString(MainActivity.KEY_ROOM_NAME, roomName);
@@ -92,9 +106,10 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
             }
         });
 
-        btnRefreshDevices.setOnClickListener(view1 ->  refresh());
+        binding.btnRefreshDevices.setOnClickListener(view1 ->  refresh());
 
-        btnBaudRate.setOnClickListener(view1 -> {
+        /*
+        binding.btnBaudRate.setOnClickListener(view1 -> {
             final String[] values = getResources().getStringArray(R.array.baud_rates);
             int pos = java.util.Arrays.asList(values).indexOf(String.valueOf(baudRate));
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -106,7 +121,9 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
             builder.create().show();
         });
 
-        btnReadMode.setOnClickListener(view1 -> {
+         */
+
+        binding.btnReadMode.setOnClickListener(view1 -> {
             final String[] values = getResources().getStringArray(R.array.read_modes);
             int pos = withIoManager ? 0 : 1; // read_modes[0]=event/io-manager, read_modes[1]=direct
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -119,8 +136,19 @@ public class DevicesFragment extends Fragment implements DeviceAdapter.ClickList
         });
 
 
+        binding.btnCloseConfig.setOnClickListener(view -> {
+            Bundle args = new Bundle();
+            args.putInt("device", 0);
+            args.putInt("port", 0);
+            args.putInt("baud", baudRate);
+            args.putBoolean("withIoManager", withIoManager);
+            Fragment fragment = new TerminalFragment();
+            fragment.setArguments(args);
+            getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").addToBackStack(null).commit();
+        });
 
-        return view;
+
+        return binding.getRoot();
     }
 
     @Override

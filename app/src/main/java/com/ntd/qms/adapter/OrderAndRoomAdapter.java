@@ -105,7 +105,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         @Override
         public boolean areItemsTheSame(OrderAndRoomItem oldItem, OrderAndRoomItem newItem) {
-            return (oldItem.getOrder().equals(newItem.getOrder()));
+            return (oldItem.getRoom() == newItem.getRoom());
         }
 
         @Override
