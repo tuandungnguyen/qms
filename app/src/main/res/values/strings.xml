@@ -16,5 +16,12 @@
     <string name="calling_room">Quầy</string>
     <string name="baud_rate">Baud Rate</string>
 
+    <string name="display_mode">Chế độ hiển thị</string>
+    <string name="main_display">Main Display</string>
+    <string name="counter_display">Counter Display</string>
+
+    <string name="table_view_mode">Danh sách hiển thị</string>
+    <string name="android_box_id">ID của thiết bị</string>
+
 
 </resources>

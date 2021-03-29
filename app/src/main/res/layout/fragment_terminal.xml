@@ -141,8 +141,8 @@
             android:id="@+id/layoutCounterDisplay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:clickable="true"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -186,11 +186,10 @@
             <TextView
                 android:id="@+id/tvRoomName"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/dp_64"
+                android:minHeight="@dimen/dp_64"
+                android:layout_height="wrap_content"
                 android:background="@color/colorHeader"
                 android:ellipsize="marquee"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:scrollHorizontally="true"
                 android:singleLine="true"
@@ -207,24 +206,27 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutMainDisplay"
             android:layout_width="match_parent"
-            android:clickable="true"
             android:layout_height="match_parent"
+            android:clickable="true"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tvRoomName2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp_100"
                 android:background="@color/colorHeader"
+                android:gravity="center_vertical"
+                android:singleLine="true"
                 android:ellipsize="marquee"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:text="@string/sample_text"
+                android:marqueeRepeatLimit ="marquee_forever"
+                android:scrollHorizontally="true"
+                android:layout_width="wrap_content"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_45"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -282,12 +284,21 @@
             android:id="@+id/tvTextReceive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
             android:textColor="@color/grey"
             android:textSize="16sp"
-            tools:text="Receive Text"
-            android:layout_margin="@dimen/dp_16"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            tools:text="Receive Text" />
+
+        <View
+            android:id="@+id/btnMenuConfig"
+            android:layout_width="@dimen/dp_100"
+            android:layout_height="@dimen/dp_100"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -67,12 +67,67 @@
                     app:layout_constraintTop_toBottomOf="@+id/tvConfigDisplay">
 
                     <TextView
+                        android:id="@+id/tvDisplayMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dp_16"
+                        android:text="@string/display_mode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGroupDisplayMode"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDisplayMode"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <RadioButton
+                            android:id="@+id/rbtnCounterDisplay"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/sp_16"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:text="@string/counter_display"/>
+
+                        <RadioButton
+                            android:id="@+id/rbtnMainDisplay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/main_display"
+                            android:layout_marginStart="@dimen/dp_8"
+                            android:textSize="@dimen/sp_16"/>
+
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/tvTableViewMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/table_view_mode"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/radioGroupDisplayMode" />
+
+                    <Spinner
+                        android:id="@+id/spinnerTableViewMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:minWidth="@dimen/dp_32"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvTableViewMode"
+                        app:layout_constraintStart_toEndOf="@+id/tvTableViewMode" />
+
+                    <TextView
                         android:id="@+id/tvMaxLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:text="@string/max_line"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toBottomOf="@+id/spinnerTableViewMode" />
 
                     <EditText
                         android:id="@+id/edtMaxLine"
@@ -85,8 +140,9 @@
                     <TextView
                         android:id="@+id/tvAndroidBox"
                         android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:layout_height="wrap_content"
-                        android:text="Device ID: "
+                        android:text="@string/android_box_id"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/edtMaxLine" />
 
@@ -178,6 +234,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/baud_rate"
+                android:textSize="@dimen/sp_16"
                 android:paddingBottom="2dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvConfigUSBSerial" />

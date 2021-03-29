@@ -165,6 +165,10 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         binding.tvRoomName.setText(roomName);
         binding.tvRoomName2.setText(roomName);
 
+        binding.btnMenuConfig.setOnClickListener(view -> {
+            getActivity().onBackPressed();
+        });
+
         return binding.getRoot();
     }
 
@@ -358,10 +362,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     //Counter Display
                     binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
                     binding.layoutMainDisplay.setVisibility(View.GONE);
+                    binding.tvRoomName.setSelected(true);
+
 
                     if (receiveStrings[1].equals("" + androidBoxID)){
                         binding.tvNumber.setText(Utils.formatQueueNumber(receiveStrings[3],4));
-                        binding.tvRoomName.setSelected(true);
+
                     }
 
                 } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {
@@ -369,6 +375,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     //Main Display
                     binding.layoutMainDisplay.setVisibility(View.VISIBLE);
                     binding.layoutCounterDisplay.setVisibility(View.GONE);
+                    binding.tvRoomName2.setSelected(true);
 
                     try {
                         String res = Integer.toBinaryString(Integer.parseInt(receiveStrings[4]));

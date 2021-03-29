@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ntd.qms.R;
 import com.ntd.qms.data.OrderAndRoomItem;
+import com.ntd.qms.util.Utils;
 
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         OrderAndRoomItem item = currentList.get(position);
 
-        holder.tvOrder.setText(item.getOrder());
+        holder.tvOrder.setText(Utils.formatQueueNumber(item.getOrder(),4));
 
         holder.tvRoomName.setText(String.valueOf(item.getRoom()));
 

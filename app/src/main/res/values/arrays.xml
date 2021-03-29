@@ -12,4 +12,14 @@
         <item>event: SerialInputOutputManager.onNewData()</item>
         <item>direct: UsbSerialPort.read()</item>
     </string-array>
+    <string-array name="table_type">
+        <item>1 cột - 2 dòng</item>
+        <item>1 cột - 3 dòng</item>
+        <item>1 cột - 3 dòng</item>
+        <item>1 cột - 5 dòng</item>
+        <item>2 cột - 2 dòng</item>
+        <item>2 cột - 3 dòng</item>
+        <item>2 cột - 4 dòng</item>
+        <item>2 cột - 5 dòng</item>
+    </string-array>
 </resources>

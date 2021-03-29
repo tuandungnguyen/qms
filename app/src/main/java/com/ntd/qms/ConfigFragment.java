@@ -62,11 +62,10 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         binding.rcvDevices.setLayoutManager(layoutManager);
         binding.rcvDevices.setAdapter(deviceAdapter);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.baud_rates, android.R.layout.simple_spinner_item);
+
         final String[] valuesBR = getResources().getStringArray(R.array.baud_rates);
         int posBR = java.util.Arrays.asList(valuesBR).indexOf(String.valueOf(baudRate));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerBaudRate.setAdapter(adapter);
+        binding.spinnerBaudRate.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item, valuesBR));
         binding.spinnerBaudRate.setSelection(posBR, true);
         binding.spinnerBaudRate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -75,6 +74,24 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt(MainActivity.KEY_BAUD_RATE, baudRate);
                 editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        final String[] valuesTableView = getResources().getStringArray(R.array.table_type);
+        binding.spinnerTableViewMode.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item, valuesTableView));
+        binding.spinnerTableViewMode.setSelection(posBR, true);
+        binding.spinnerTableViewMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                /*baudRate = Integer.parseInt(valuesBR[pos]);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt(MainActivity.KEY_BAUD_RATE, baudRate);
+                editor.apply();*/
             }
 
             @Override
