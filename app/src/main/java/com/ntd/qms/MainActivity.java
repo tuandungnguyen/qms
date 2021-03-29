@@ -15,6 +15,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String KEY_LINE_NUMBER = "key_line_number";
     public static final String KEY_BAUD_RATE = "key_baud_rate";
 
+    public static final String USB_DEVICE = "device";
+    public static final String USB_PORT = "port";
+    public static final String USB_BAUD_RATE = "baud";
+    public static final String USB_IO_MANAGER = "withIoManager";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -53,7 +53,7 @@
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="@color/black"
-                    android:textSize="32sp"
+                    android:textSize="@dimen/sp_32"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,6 +125,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
                         android:text="@string/max_line"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/spinnerTableViewMode" />
@@ -134,6 +135,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:textSize="@dimen/sp_16"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvMaxLine" />
 
@@ -141,6 +143,7 @@
                         android:id="@+id/tvAndroidBox"
                         android:layout_width="wrap_content"
                         android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
                         android:layout_height="wrap_content"
                         android:text="@string/android_box_id"
                         app:layout_constraintStart_toStartOf="parent"
@@ -151,6 +154,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:textSize="@dimen/sp_16"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvAndroidBox" />
 
@@ -158,6 +162,7 @@
                         android:id="@+id/tvHouseName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_16"
                         android:text="Khu: "
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/edtAndroidBoxID" />
@@ -168,6 +173,7 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:lines="1"
+                        android:textSize="@dimen/sp_16"
                         android:maxLines="1"
                         android:singleLine="true"
                         app:layout_constraintStart_toStartOf="parent"
@@ -180,6 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="SAVE"
+                        android:textSize="@dimen/sp_16"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/edtHouseName" />
@@ -222,7 +229,7 @@
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="32sp"
+                android:textSize="@dimen/sp_32"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

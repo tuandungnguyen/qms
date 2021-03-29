@@ -217,6 +217,13 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         if(item.getDriver() == null) {
             Toast.makeText(getActivity(), "no driver", Toast.LENGTH_SHORT).show();
         } else {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt(MainActivity.USB_DEVICE, item.getDevice().getDeviceId());
+            editor.putInt(MainActivity.USB_PORT, item.getPort());
+            editor.putInt(MainActivity.USB_BAUD_RATE, baudRate);
+            editor.putBoolean(MainActivity.USB_IO_MANAGER, withIoManager);
+            editor.apply();
+
             Bundle args = new Bundle();
             args.putInt("device", item.getDevice().getDeviceId());
             args.putInt("port", item.getPort());
