@@ -1,285 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout  xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:id="@+id/layoutControlPanel"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ToggleButton
-                android:id="@+id/controlLineRts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48sp"
-                android:textOff="RTS"
-                android:textOn="RTS" />
-
-            <ToggleButton
-                android:id="@+id/controlLineCts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48sp"
-                android:clickable="false"
-                android:textColor="@android:color/secondary_text_dark"
-                android:textOff="CTS"
-                android:textOn="CTS" />
-
-            <View
-                android:layout_height="match_parent"
-                android:layout_width="6dp" />
-
-            <ToggleButton
-                android:id="@+id/controlLineDtr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48sp"
-                android:textOff="DTR"
-                android:textOn="DTR" />
-
-            <ToggleButton
-                android:id="@+id/controlLineDsr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:minWidth="48sp"
-                android:textColor="@android:color/secondary_text_dark"
-                android:textOff="DSR"
-                android:textOn="DSR" />
-
-            <View
-                android:layout_height="match_parent"
-                android:layout_width="6dp" />
-
-            <ToggleButton
-                android:id="@+id/controlLineCd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:minWidth="48sp"
-                android:textColor="@android:color/secondary_text_dark"
-                android:textOff="CD"
-                android:textOn="CD" />
-
-            <ToggleButton
-                android:id="@+id/controlLineRi"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minWidth="48sp"
-                android:clickable="false"
-                android:textColor="@android:color/secondary_text_dark"
-                android:textOff="RI"
-                android:textOn="RI" />
-
-        </LinearLayout>
-
-        <View
+            android:id="@+id/layoutControlPanel"
             android:layout_width="match_parent"
-            android:background="?android:attr/listDivider"
-            android:layout_height="2dp" />
-
-        <TextView
-            android:id="@+id/receive_text"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:freezesText="true"
-            android:gravity="bottom"
-            android:scrollbars="vertical"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:typeface="monospace" />
-
-        <Button
-            android:id="@+id/receive_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Read" />
-
-        <View
-            android:layout_width="match_parent"
-            android:background="?android:attr/listDivider"
-            android:layout_height="2dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/send_text"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:inputType="text|textNoSuggestions"
-                android:singleLine="true" />
-
-            <ImageButton
-                android:id="@+id/send_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_send_white_24dp" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutCounterDisplay"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvDeviceId"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/room"
-            android:textAllCaps="true"
-            android:textSize="@dimen/sp_45"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/colorHeader"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/white"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvDeviceId"
-            app:layout_constraintBottom_toTopOf="@id/tvRoomName">
-
-            <TextView
-                android:id="@+id/tvNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/red"
-                android:textSize="200sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <TextView
-                android:id="@+id/tvTextReceive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textSize="16sp"
-                tools:text="Receive Text"
-                android:layout_margin="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-        <TextView
-            android:id="@+id/tvRoomName"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_64"
-            android:text="@string/sample_text"
-            android:textSize="@dimen/sp_45"
-            android:gravity="center"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:background="@color/colorHeader"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutMainDisplay"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/tvRoomName2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/sample_text"
-            android:textAllCaps="true"
-            android:textSize="@dimen/sp_45"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/colorHeader"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvRoomName2"
-            app:layout_constraintBottom_toBottomOf="parent">
-
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/layoutMainDisplayHeader"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                <ToggleButton
+                    android:id="@+id/controlLineRts"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="64sp"
-                    android:text="@string/calling_number"
-                    android:textColor="@color/red"
-                    android:textAlignment="center"/>
+                    android:minWidth="48sp"
+                    android:textOff="RTS"
+                    android:textOn="RTS" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                <ToggleButton
+                    android:id="@+id/controlLineCts"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="64sp"
-                    android:text="@string/calling_room"
-                    android:textAlignment="center"
-                    android:textColor="@color/red"/>
+                    android:clickable="false"
+                    android:minWidth="48sp"
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textOff="CTS"
+                    android:textOn="CTS" />
 
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent" />
 
+                <ToggleButton
+                    android:id="@+id/controlLineDtr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="48sp"
+                    android:textOff="DTR"
+                    android:textOn="DTR" />
+
+                <ToggleButton
+                    android:id="@+id/controlLineDsr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:minWidth="48sp"
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textOff="DSR"
+                    android:textOn="DSR" />
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="match_parent" />
+
+                <ToggleButton
+                    android:id="@+id/controlLineCd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:minWidth="48sp"
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textOff="CD"
+                    android:textOn="CD" />
+
+                <ToggleButton
+                    android:id="@+id/controlLineRi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:minWidth="48sp"
+                    android:textColor="@android:color/secondary_text_dark"
+                    android:textOff="RI"
+                    android:textOn="RI" />
 
             </LinearLayout>
 
-           <androidx.recyclerview.widget.RecyclerView
-               app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintTop_toBottomOf="@+id/layoutMainDisplayHeader"
-               app:layout_constraintBottom_toBottomOf="parent"
-               android:layout_width="match_parent"
-               android:layout_height="0dp"
-               android:id="@+id/rcvOrders"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/receive_text"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:freezesText="true"
+                android:gravity="bottom"
+                android:scrollbars="vertical"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:typeface="monospace" />
+
+            <Button
+                android:id="@+id/receive_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/send_text"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="text|textNoSuggestions"
+                    android:singleLine="true" />
+
+                <ImageButton
+                    android:id="@+id/send_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_send_white_24dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCounterDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:clickable="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvDeviceId"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100"
+                android:background="@color/colorHeader"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:text="@string/room"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_45"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toTopOf="@id/tvRoomName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDeviceId">
+
+                <TextView
+                    android:id="@+id/tvNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="200sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/tvRoomName"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_64"
+                android:background="@color/colorHeader"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:scrollHorizontally="true"
+                android:singleLine="true"
+                android:text="@string/sample_text"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_45"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutMainDisplay"
+            android:layout_width="match_parent"
+            android:clickable="true"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tvRoomName2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_100"
+                android:background="@color/colorHeader"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:text="@string/sample_text"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_45"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRoomName2">
+
+
+                <LinearLayout
+                    android:id="@+id/layoutMainDisplayHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/calling_number"
+                        android:textAlignment="center"
+                        android:textColor="@color/red"
+                        android:textSize="64sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/calling_room"
+                        android:textAlignment="center"
+                        android:textColor="@color/red"
+                        android:textSize="64sp" />
+
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rcvOrders"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutMainDisplayHeader" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvTextReceive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/grey"
+            android:textSize="16sp"
+            tools:text="Receive Text"
+            android:layout_margin="@dimen/dp_16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

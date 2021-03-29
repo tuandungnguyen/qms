@@ -19,13 +19,11 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -38,7 +36,7 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.ntd.qms.adapter.OrderAndRoomAdapter;
 import com.ntd.qms.data.OrderAndRoomItem;
 import com.ntd.qms.databinding.FragmentTerminalBinding;
-import com.ntd.qms.util.HexDump;
+import com.ntd.qms.util.Utils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -343,9 +341,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         */
 
-        String receiveString = "0,2,103,1001,16385,";
+        String receiveString = "0,2,103,59,16385,";
 
-        binding.tvTextReceive.setText(receiveString);
+        binding.tvTextReceive.setText("Receive Text: \n" + receiveString);
         Toast.makeText(getActivity(), receiveString, Toast.LENGTH_SHORT).show();
 
         if (receiveString.length() > 0 && receiveString.contains(",")) {
@@ -362,7 +360,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     binding.layoutMainDisplay.setVisibility(View.GONE);
 
                     if (receiveStrings[1].equals("" + androidBoxID)){
-                        binding.tvNumber.setText(receiveStrings[3]);
+                        binding.tvNumber.setText(Utils.formatQueueNumber(receiveStrings[3],4));
+                        binding.tvRoomName.setSelected(true);
                     }
 
                 } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {
