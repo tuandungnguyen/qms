@@ -146,59 +146,79 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvDeviceId"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bannerCounterDisplay"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_100"
-                android:background="@color/colorHeader"
-                android:ellipsize="marquee"
-                android:gravity="center"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:text="@string/room"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_45"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@color/blue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="@dimen/dp_100">
+
+                <TextView
+                    android:id="@+id/tvDeviceId"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    tools:text="@string/sample_text"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:layout_width="wrap_content"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_45" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@color/white"
-                app:layout_constraintBottom_toTopOf="@id/tvRoomName"
+                app:layout_constraintBottom_toTopOf="@id/footerCounterDisplay"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDeviceId">
+                app:layout_constraintTop_toBottomOf="@id/bannerCounterDisplay">
 
                 <TextView
                     android:id="@+id/tvNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
-                    android:textSize="200sp"
+                    android:textSize="@dimen/sp_200"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <TextView
-                android:id="@+id/tvRoomName"
-                android:layout_width="wrap_content"
-                android:minHeight="@dimen/dp_64"
-                android:layout_height="wrap_content"
-                android:background="@color/colorHeader"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:text="@string/sample_text"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_45"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/footerCounterDisplay"
+                android:layout_width="match_parent"
+                android:background="@color/blue"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_height="@dimen/dp_64">
+
+                <TextView
+                    android:id="@+id/tvRoomName"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:layout_width="wrap_content"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_45" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -212,22 +232,32 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/tvRoomName2"
-                android:layout_height="wrap_content"
-                android:minHeight="@dimen/dp_100"
-                android:background="@color/colorHeader"
-                android:gravity="center_vertical"
-                android:singleLine="true"
-                android:ellipsize="marquee"
-                android:marqueeRepeatLimit ="marquee_forever"
-                android:scrollHorizontally="true"
-                android:layout_width="wrap_content"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_45"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bannerMainDisplay"
+                android:layout_width="match_parent"
+                android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="@dimen/dp_100">
+
+                <TextView
+                    android:id="@+id/tvRoomName2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@string/sample_text"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit ="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:layout_width="wrap_content"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_45" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -235,7 +265,7 @@
                 android:background="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvRoomName2">
+                app:layout_constraintTop_toBottomOf="@id/bannerMainDisplay">
 
                 <Button
                     app:layout_constraintStart_toStartOf="parent"

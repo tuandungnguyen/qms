@@ -139,7 +139,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 inflater, R.layout.fragment_terminal, container, false);
 
 
-
         orderAndRoomAdapter = new OrderAndRoomAdapter(getActivity());
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
         binding.rcvOrders.setLayoutManager(layoutManager);
@@ -161,6 +160,17 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
 
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+
+        if (prefs.getInt(MainActivity.KEY_LINE_NUMBER,1) > 1){
+            binding.layoutCounterDisplay.setVisibility(View.GONE);
+            binding.layoutMainDisplay.setVisibility(View.VISIBLE);
+            binding.tvRoomName2.setSelected(true);
+        } else {
+            binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
+            binding.layoutMainDisplay.setVisibility(View.GONE);
+            binding.tvRoomName.setSelected(true);
+        }
+
         androidBoxID = prefs.getInt(MainActivity.KEY_DEVICE_ID, 1);
         roomName = prefs.getString(MainActivity.KEY_ROOM_NAME, "");
 
@@ -379,8 +389,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
                     //Check android box with second param.
                     if (receiveStrings[1].equals("" + androidBoxID)){
-                        binding.tvNumber.setText(Utils.formatQueueNumber(receiveStrings[3],4));
-
+                        int param1 = Integer.parseInt(receiveStrings[3]);
+                        int bitmaskA = 0x3FFF;
+                        binding.tvNumber.setText(Utils.formatQueueNumber((param1&bitmaskA),4));
                     }
 
                 } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {
@@ -391,20 +402,28 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     binding.tvRoomName2.setSelected(true);
 
                     try {
-                        String res = Integer.toBinaryString(Integer.parseInt(receiveStrings[4]) ^ 127);
-                        while (res.length() < 16) {
-                            res += '0';
-                        }
-                        int direction = Integer.parseInt(res.substring(0, 2), 2);
-                        int room = Integer.parseInt(res.substring(9, 16), 2);
+                        int param1 = Integer.parseInt(receiveStrings[3]);
+                        int param2 = Integer.parseInt(receiveStrings[4]);
+                        int bitmaskA = 0x3FFF;
+                        int bitmaskB = 0x007F;
 
-                        OrderAndRoomItem item = new OrderAndRoomItem(receiveStrings[3], direction, room);
-                        listItem.removeIf(s -> s.getRoom() == room);
+                        int queueNumber = param1&bitmaskA;
+                        int room = param2 & bitmaskB;
+                        int direction = (param2 >> 14) & 0 & 0x03;
+
+                        OrderAndRoomItem item = new OrderAndRoomItem(queueNumber, direction, room);
+                        int finalRoom = room;
+                        listItem.removeIf(s -> s.getRoom() == finalRoom);
                         listItem.add(item);
 
                         ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                         newListItem.addAll(listItem);
                         orderAndRoomAdapter.getDiffer().submitList(newListItem);
+                        try {
+                            binding.rcvOrders.scrollToPosition(0);
+                        } catch (Exception ignored){
+
+                        }
 
                     } catch (Exception ex) {
                         Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();

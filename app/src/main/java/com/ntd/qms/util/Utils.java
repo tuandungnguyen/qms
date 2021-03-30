@@ -2,8 +2,9 @@ package com.ntd.qms.util;
 
 public class Utils {
 
-    public static String formatQueueNumber(String original_text, int length) {
+    public static String formatQueueNumber(int original_number, int length) {
         StringBuilder res = new StringBuilder();
+        String original_text = String.valueOf(original_number);
 
         if (original_text.isEmpty())
             return "";
