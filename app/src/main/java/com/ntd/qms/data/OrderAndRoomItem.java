@@ -1,17 +1,17 @@
 package com.ntd.qms.data;
 
 public class OrderAndRoomItem {
-    String order;
+    String queueNumber;
     int direction;
     int room;
 
 
-    public String getOrder() {
-        return order;
+    public String getQueueNumber() {
+        return queueNumber;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setQueueNumber(String queueNumber) {
+        this.queueNumber = queueNumber;
     }
 
     public int getDirection() {
@@ -30,8 +30,8 @@ public class OrderAndRoomItem {
         this.room = room;
     }
 
-    public OrderAndRoomItem(String order, int direction, int room) {
-        this.order = order;
+    public OrderAndRoomItem(String queueNumber, int direction, int room) {
+        this.queueNumber = queueNumber;
         this.direction = direction;
         this.room = room;
     }

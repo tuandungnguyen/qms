@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,6 +25,7 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -36,6 +38,7 @@ import com.hoho.android.usbserial.util.SerialInputOutputManager;
 import com.ntd.qms.adapter.OrderAndRoomAdapter;
 import com.ntd.qms.data.OrderAndRoomItem;
 import com.ntd.qms.databinding.FragmentTerminalBinding;
+import com.ntd.qms.util.HexDump;
 import com.ntd.qms.util.Utils;
 
 import java.io.IOException;
@@ -169,6 +172,10 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             getActivity().onBackPressed();
         });
 
+        binding.btnSendTestData.setOnClickListener(view -> {
+            sendTestData();
+        });
+
         return binding.getRoot();
     }
 
@@ -292,10 +299,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     }
 
     private void send(String str) {
-
-        receive(null);
-
-       /* if (!connected) {
+       if (!connected) {
             Toast.makeText(getActivity(), "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -309,7 +313,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             usbSerialPort.write(data, WRITE_WAIT_MILLIS);
         } catch (Exception e) {
             onRunError(e);
-        }*/
+        }
     }
 
     private void read() {
@@ -322,7 +326,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
             receive(Arrays.copyOf(buffer, len));
 
-
         } catch (IOException e) {
             // when using read with timeout, USB bulkTransfer returns -1 on timeout _and_ errors
             // like connection loss, so there is typically no exception thrown here on error
@@ -331,8 +334,18 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
     }
 
+    private void receive(byte[] data){
+        //Original
+    }
 
-    private void receive(byte[] data) {
+
+    private void sendTestData() {
+        String dataString = binding.edtTestData.getText().toString();
+        receive(dataString);
+    }
+
+
+    private void receive(String demo) {
 
        /* SpannableStringBuilder spn = new SpannableStringBuilder();
         spn.append("receive " + data.length + " bytes\n");
@@ -345,7 +358,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         */
 
-        String receiveString = "0,2,103,59,16385,";
+        String receiveString = demo;
 
         binding.tvTextReceive.setText("Receive Text: \n" + receiveString);
         Toast.makeText(getActivity(), receiveString, Toast.LENGTH_SHORT).show();
@@ -364,7 +377,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     binding.layoutMainDisplay.setVisibility(View.GONE);
                     binding.tvRoomName.setSelected(true);
 
-
+                    //Check android box with second param.
                     if (receiveStrings[1].equals("" + androidBoxID)){
                         binding.tvNumber.setText(Utils.formatQueueNumber(receiveStrings[3],4));
 
@@ -378,7 +391,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     binding.tvRoomName2.setSelected(true);
 
                     try {
-                        String res = Integer.toBinaryString(Integer.parseInt(receiveStrings[4]));
+                        String res = Integer.toBinaryString(Integer.parseInt(receiveStrings[4]) ^ 127);
                         while (res.length() < 16) {
                             res += '0';
                         }
@@ -386,7 +399,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         int room = Integer.parseInt(res.substring(9, 16), 2);
 
                         OrderAndRoomItem item = new OrderAndRoomItem(receiveStrings[3], direction, room);
+                        listItem.removeIf(s -> s.getRoom() == room);
                         listItem.add(item);
+
                         ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                         newListItem.addAll(listItem);
                         orderAndRoomAdapter.getDiffer().submitList(newListItem);
@@ -394,11 +409,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                     } catch (Exception ex) {
                         Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
-
-
             }
         }
 

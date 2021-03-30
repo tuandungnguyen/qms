@@ -208,7 +208,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -237,14 +237,35 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvRoomName2">
 
+                <Button
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Send Test Data"
+                    android:id="@+id/btnSendTestData"/>
+
+
+                <EditText
+                    android:id="@+id/edtTestData"
+                    android:singleLine="true"
+                    app:layout_constraintTop_toTopOf="@+id/btnSendTestData"
+                    app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:hint="Please enter test data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
 
                 <LinearLayout
                     android:id="@+id/layoutMainDisplayHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@+id/btnSendTestData">
 
                     <TextView
                         android:layout_width="0dp"
