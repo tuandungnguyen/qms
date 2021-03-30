@@ -227,6 +227,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     public void onNewData(byte[] data) {
         mainLooper.post(() -> {
             receive(data);
+            Toast.makeText(getActivity(), "getData", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -332,8 +333,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             return;
         }
         try {
-            byte[] buffer = new byte[1];
+            byte[] buffer = new byte[8192];
             int len = usbSerialPort.read(buffer, READ_WAIT_MILLIS);
+            Toast.makeText(getActivity(), "buffer_len = " + len, Toast.LENGTH_SHORT).show();
             receive(Arrays.copyOf(buffer, len));
 
         } catch (IOException e) {
@@ -344,20 +346,20 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
     }
 
-    private void receive(byte[] data){
-        //Original
-    }
 
 
     private void sendTestData() {
         String dataString = binding.edtTestData.getText().toString();
         receive(dataString);
     }
+    private void receive(String demo){
+    }
 
 
-    private void receive(String demo) {
 
-       /* SpannableStringBuilder spn = new SpannableStringBuilder();
+    private void receive(byte[] data) {
+
+        SpannableStringBuilder spn = new SpannableStringBuilder();
         spn.append("receive " + data.length + " bytes\n");
         if (data.length > 0)
             spn.append(HexDump.dumpHexString(data) + "\n");
@@ -366,12 +368,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         String receiveString = HexDump.bytesToString(data);
 
-        */
-
-        String receiveString = demo;
-
-        binding.tvTextReceive.setText("Receive Text: \n" + receiveString);
-        Toast.makeText(getActivity(), receiveString, Toast.LENGTH_SHORT).show();
+        binding.tvTextReceive.setText("Receive Text: " + receiveString);
 
         if (receiveString.length() > 0 && receiveString.contains(",")) {
 
@@ -416,14 +413,15 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         listItem.removeIf(s -> s.getRoom() == finalRoom);
                         listItem.add(item);
 
+                        if (listItem.size() > prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3)){
+                            listItem.remove(0);
+                        }
+
                         ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                         newListItem.addAll(listItem);
-                        orderAndRoomAdapter.getDiffer().submitList(newListItem);
-                        try {
-                            binding.rcvOrders.scrollToPosition(0);
-                        } catch (Exception ignored){
 
-                        }
+                        orderAndRoomAdapter.getDiffer().submitList(newListItem);
+
 
                     } catch (Exception ex) {
                         Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();

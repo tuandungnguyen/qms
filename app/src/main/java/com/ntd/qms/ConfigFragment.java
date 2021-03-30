@@ -155,9 +155,9 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
         binding.btnCloseConfig.setOnClickListener(view -> {
             Bundle args = new Bundle();
-            args.putInt("device", 0);
-            args.putInt("port", 0);
-            args.putInt("baud", baudRate);
+            args.putInt("device", prefs.getInt(MainActivity.USB_DEVICE, 0));
+            args.putInt("port", prefs.getInt(MainActivity.USB_PORT, 0));
+            args.putInt("baud", prefs.getInt(MainActivity.KEY_BAUD_RATE, 0));
             args.putBoolean("withIoManager", withIoManager);
             Fragment fragment = new TerminalFragment();
             fragment.setArguments(args);

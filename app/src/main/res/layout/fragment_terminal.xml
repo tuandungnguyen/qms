@@ -272,6 +272,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:text="Send Test Data"
                     android:id="@+id/btnSendTestData"/>
 
@@ -279,6 +280,7 @@
                 <EditText
                     android:id="@+id/edtTestData"
                     android:singleLine="true"
+                    android:visibility="gone"
                     app:layout_constraintTop_toTopOf="@+id/btnSendTestData"
                     app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
                     android:layout_marginStart="16dp"
@@ -335,9 +337,9 @@
             android:id="@+id/tvTextReceive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_16"
-            android:textColor="@color/grey"
-            android:textSize="16sp"
+            android:layout_margin="@dimen/dp_8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Receive Text" />
