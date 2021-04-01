@@ -370,67 +370,71 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         binding.tvTextReceive.setText("Receive Text: " + receiveString);
 
-        if (receiveString.length() > 0 && receiveString.contains(",")) {
+        try {
 
-            String[] receiveStrings = receiveString.split(",");
+            if (receiveString.length() > 0 && receiveString.contains(",")) {
 
-            //Hien Thi
-            if (receiveStrings[0].equals("0") && receiveStrings[2].equals("103")) {
+                String[] receiveStrings = receiveString.split(",");
 
-                if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) == 1) {
+                //Hien Thi
+                if (receiveStrings[0].equals("0") && receiveStrings[2].equals("103")) {
 
-                    //Counter Display
-                    binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
-                    binding.layoutMainDisplay.setVisibility(View.GONE);
-                    binding.tvRoomName.setSelected(true);
+                    if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) == 1) {
 
-                    //Check android box with second param.
-                    if (receiveStrings[1].equals("" + androidBoxID)){
-                        int param1 = Integer.parseInt(receiveStrings[3]);
-                        int bitmaskA = 0x3FFF;
-                        binding.tvNumber.setText(Utils.formatQueueNumber((param1&bitmaskA),4));
-                    }
+                        //Counter Display
+                        binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
+                        binding.layoutMainDisplay.setVisibility(View.GONE);
+                        binding.tvRoomName.setSelected(true);
 
-                } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {
-
-                    //Main Display
-                    binding.layoutMainDisplay.setVisibility(View.VISIBLE);
-                    binding.layoutCounterDisplay.setVisibility(View.GONE);
-                    binding.tvRoomName2.setSelected(true);
-
-                    try {
-                        int param1 = Integer.parseInt(receiveStrings[3]);
-                        int param2 = Integer.parseInt(receiveStrings[4]);
-                        int bitmaskA = 0x3FFF;
-                        int bitmaskB = 0x007F;
-
-                        int queueNumber = param1&bitmaskA;
-                        int room = param2 & bitmaskB;
-                        int direction = (param2 >> 14) & 0 & 0x03;
-
-                        OrderAndRoomItem item = new OrderAndRoomItem(queueNumber, direction, room);
-                        int finalRoom = room;
-                        listItem.removeIf(s -> s.getRoom() == finalRoom);
-                        listItem.add(item);
-
-                        if (listItem.size() > prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3)){
-                            listItem.remove(0);
+                        //Check android box with second param.
+                        if (receiveStrings[1].equals("" + androidBoxID)) {
+                            int param1 = Integer.parseInt(receiveStrings[3]);
+                            int bitmaskA = 0x3FFF;
+                            binding.tvNumber.setText(Utils.formatQueueNumber((param1 & bitmaskA), 4));
                         }
 
-                        ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
-                        newListItem.addAll(listItem);
+                    } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {
 
-                        orderAndRoomAdapter.getDiffer().submitList(newListItem);
+                        //Main Display
+                        binding.layoutMainDisplay.setVisibility(View.VISIBLE);
+                        binding.layoutCounterDisplay.setVisibility(View.GONE);
+                        binding.tvRoomName2.setSelected(true);
+
+                        try {
+                            int param1 = Integer.parseInt(receiveStrings[3]);
+                            int param2 = Integer.parseInt(receiveStrings[4]);
+                            int bitmaskA = 0x3FFF;
+                            int bitmaskB = 0x007F;
+
+                            int queueNumber = param1 & bitmaskA;
+                            int room = param2 & bitmaskB;
+                            int direction = (param2 >> 14) & 0 & 0x03;
+
+                            OrderAndRoomItem item = new OrderAndRoomItem(queueNumber, direction, room);
+                            int finalRoom = room;
+                            listItem.removeIf(s -> s.getRoom() == finalRoom);
+                            listItem.add(item);
+
+                            if (listItem.size() > prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3)) {
+                                listItem.remove(0);
+                            }
+
+                            ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
+                            newListItem.addAll(listItem);
+
+                            orderAndRoomAdapter.getDiffer().submitList(newListItem);
 
 
-                    } catch (Exception ex) {
-                        Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        } catch (Exception ex) {
+                            Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
+
+        } catch (Exception ex){
+            Toast.makeText(getActivity(), "Error: " + ex.getMessage(), Toast.LENGTH_LONG).show();
         }
-
-
 
 
     }

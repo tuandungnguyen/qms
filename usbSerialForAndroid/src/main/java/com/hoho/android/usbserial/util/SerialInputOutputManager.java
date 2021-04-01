@@ -11,8 +11,11 @@ import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class which services a {@link UsbSerialPort} in its {@link #run()} method.
@@ -209,9 +212,30 @@ public class SerialInputOutputManager implements Runnable {
             if (DEBUG) Log.d(TAG, "Read data len=" + len);
             final Listener listener = getListener();
             if (listener != null) {
-                final byte[] data = new byte[len];
+                boolean getdata = false;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                for (int i = 0; i < len; i++) {
+                    if (buffer[i] == 0x02){
+                        baos = new ByteArrayOutputStream();
+                        getdata = true;
+                    }
+                    if (getdata)
+                    {
+                        if (buffer[i] > 0x03)
+                        {
+                            baos.write(buffer[i]);
+                        }
+                        else if (buffer[i] == 0x03)
+                        {
+                            getdata = false;
+                            listener.onNewData(baos.toByteArray());
+                        }
+                    }
+                }
+
+               /* final byte[] data = new byte[len];
                 System.arraycopy(buffer, 0, data, 0, len);
-                listener.onNewData(data);
+                listener.onNewData(data);*/
             }
         }
 
