@@ -1,5 +1,7 @@
-com/hoho/android/usbserial/driver/UsbId.java
- com.hoho.android.usbserial.driver.UsbId
+com/hoho/android/usbserial/util/SerialInputOutputManager.java
+ com.hoho.android.usbserial.util.SerialInputOutputManager
+ com.hoho.android.usbserial.util.SerialInputOutputManager$Listener
+ com.hoho.android.usbserial.util.SerialInputOutputManager$State
 com/hoho/android/usbserial/driver/Ch34xSerialDriver.java
  com.hoho.android.usbserial.driver.Ch34xSerialDriver
  com.hoho.android.usbserial.driver.Ch34xSerialDriver$Ch340SerialPort
@@ -32,7 +34,5 @@ com/hoho/android/usbserial/driver/UsbSerialProber.java
  com.hoho.android.usbserial.driver.UsbSerialProber
 com/hoho/android/usbserial/driver/SerialTimeoutException.java
  com.hoho.android.usbserial.driver.SerialTimeoutException
-com/hoho/android/usbserial/util/SerialInputOutputManager.java
- com.hoho.android.usbserial.util.SerialInputOutputManager
- com.hoho.android.usbserial.util.SerialInputOutputManager$Listener
- com.hoho.android.usbserial.util.SerialInputOutputManager$State
+com/hoho/android/usbserial/driver/UsbId.java
+ com.hoho.android.usbserial.driver.UsbId

@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/tvConfigHeader"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_100"
+            android:layout_height="@dimen/dp_64"
             android:background="@color/colorHeader"
             android:gravity="center"
             android:text="@string/config"
@@ -23,15 +23,19 @@
 
         <View
             android:id="@+id/btnCloseConfig"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvConfigHeader"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="@dimen/dp_8"
+            android:background="@drawable/layout_curved_bg"
+            app:layout_constraintBottom_toTopOf="@id/btnSaveDeviceInfo"
             app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
@@ -41,7 +45,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
-                android:background="@drawable/layout_curved_bg"
                 android:visibility="visible">
 
                 <TextView
@@ -61,7 +64,7 @@
                     android:id="@+id/layoutAndroidBoxInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
+                    android:padding="@dimen/dp_8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvConfigDisplay">
@@ -107,8 +110,8 @@
                         android:id="@+id/tvTableViewMode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/table_view_mode"
-                        android:visibility="gone"
+                        android:text="@string/max_line"
+                        android:visibility="visible"
                         android:layout_marginTop="@dimen/dp_8"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +120,7 @@
                     <Spinner
                         android:id="@+id/spinnerTableViewMode"
                         android:layout_width="wrap_content"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:minWidth="@dimen/dp_32"
@@ -125,20 +128,43 @@
                         app:layout_constraintStart_toEndOf="@+id/tvTableViewMode" />
 
                     <TextView
+                        android:id="@+id/tvMaxColumn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/max_column"
+                        android:visibility="visible"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTableViewMode" />
+
+                    <Spinner
+                        android:id="@+id/spinnerMaxColumn"
+                        android:layout_width="wrap_content"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:minWidth="@dimen/dp_32"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxColumn"
+                        app:layout_constraintStart_toEndOf="@+id/tvMaxColumn" />
+
+                    <TextView
                         android:id="@+id/tvMaxLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_8"
                         android:textSize="@dimen/sp_16"
+                        android:visibility="gone"
                         android:text="@string/max_line"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/spinnerTableViewMode" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvMaxColumn" />
 
                     <EditText
                         android:id="@+id/edtMaxLine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:visibility="gone"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvMaxLine" />
@@ -163,16 +189,16 @@
                         app:layout_constraintTop_toBottomOf="@+id/tvAndroidBox" />
 
                     <TextView
-                        android:id="@+id/tvHouseName"
+                        android:id="@+id/tvRoom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_16"
-                        android:text="Khu: "
+                        android:text="@string/room_2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/edtAndroidBoxID" />
 
                     <EditText
-                        android:id="@+id/edtHouseName"
+                        android:id="@+id/edtRoom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
@@ -181,19 +207,31 @@
                         android:maxLines="1"
                         android:singleLine="true"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvHouseName" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvRoom" />
 
-
-                    <Button
-                        android:id="@+id/btnSaveDeviceInfo"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tvArea"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="SAVE"
                         android:textSize="@dimen/sp_16"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:text="@string/area"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edtHouseName" />
+                        app:layout_constraintTop_toBottomOf="@id/edtRoom" />
+
+                    <EditText
+                        android:id="@+id/edtArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:lines="1"
+                        android:textSize="@dimen/sp_16"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvArea" />
+
+
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -216,10 +254,10 @@
             android:id="@+id/layoutListDevices"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/dp_8"
             android:background="@drawable/layout_curved_bg"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btnSaveDeviceInfo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guidelineCenter"
             app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
@@ -309,6 +347,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvBaudRate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <Button
+            android:id="@+id/btnSaveDeviceInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:text="@string/save_config"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

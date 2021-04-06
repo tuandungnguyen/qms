@@ -153,7 +153,7 @@
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="@dimen/dp_100">
+                android:layout_height="@dimen/dp_64">
 
                 <TextView
                     android:id="@+id/tvDeviceId"
@@ -238,7 +238,7 @@
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="@dimen/dp_100">
+                android:layout_height="@dimen/dp_64">
 
                 <TextView
                     android:id="@+id/tvRoomName2"
@@ -339,6 +339,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_8"
             android:textColor="@color/white"
+            android:visibility="gone"
             android:textSize="@dimen/sp_16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -346,12 +347,13 @@
 
         <View
             android:id="@+id/btnMenuConfig"
-            android:layout_width="@dimen/dp_100"
-            android:layout_height="@dimen/dp_100"
-            android:clickable="true"
-            android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_64"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clickable="true"
+            android:focusable="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

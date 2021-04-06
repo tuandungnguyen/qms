@@ -212,7 +212,7 @@ public class SerialInputOutputManager implements Runnable {
             if (DEBUG) Log.d(TAG, "Read data len=" + len);
             final Listener listener = getListener();
             if (listener != null) {
-                boolean getdata = false;
+                /*boolean getdata = false;
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
                 for (int i = 0; i < len; i++) {
@@ -229,11 +229,11 @@ public class SerialInputOutputManager implements Runnable {
                             listener.onNewData(baos.toByteArray());
                         }
                     }
-                }
+                }*/
 
-               /* final byte[] data = new byte[len];
-                System.arraycopy(buffer, 0, data, 0, len);
-                listener.onNewData(data);*/
+               final byte[] data = new byte[len];
+               System.arraycopy(buffer, 0, data, 0, len);
+               listener.onNewData(data);
             }
         }
 

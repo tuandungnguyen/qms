@@ -41,6 +41,7 @@ import com.ntd.qms.databinding.FragmentTerminalBinding;
 import com.ntd.qms.util.HexDump;
 import com.ntd.qms.util.Utils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -64,7 +65,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private boolean withIoManager;
 
     private int androidBoxID;
-    private String roomName;
+    private String roomName, areaName;
 
     private BroadcastReceiver broadcastReceiver;
     private Handler mainLooper;
@@ -81,6 +82,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private boolean connected = false;
 
     SharedPreferences prefs;
+
+    boolean getdata = false;
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
     public TerminalFragment() {
         broadcastReceiver = new BroadcastReceiver() {
@@ -134,13 +138,14 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_terminal, container, false);
 
+        prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
 
         orderAndRoomAdapter = new OrderAndRoomAdapter(getActivity());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
+        int maxColumn = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), maxColumn, RecyclerView.VERTICAL, false);
         binding.rcvOrders.setLayoutManager(layoutManager);
         binding.rcvOrders.setAdapter(orderAndRoomAdapter);
 
@@ -159,8 +164,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
 
 
-        prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
-
         if (prefs.getInt(MainActivity.KEY_LINE_NUMBER,1) > 1){
             binding.layoutCounterDisplay.setVisibility(View.GONE);
             binding.layoutMainDisplay.setVisibility(View.VISIBLE);
@@ -173,10 +176,16 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         androidBoxID = prefs.getInt(MainActivity.KEY_DEVICE_ID, 1);
         roomName = prefs.getString(MainActivity.KEY_ROOM_NAME, "");
+        areaName = prefs.getString(MainActivity.KEY_AREA_NAME, "");
 
-        binding.tvDeviceId.setText(getActivity().getString(R.string.room) + " " + androidBoxID);
-        binding.tvRoomName.setText(roomName);
-        binding.tvRoomName2.setText(roomName);
+        if (roomName!=null & !roomName.isEmpty()) {
+            binding.tvDeviceId.setText(roomName);
+        } else {
+            binding.tvDeviceId.setText(getActivity().getString(R.string.room) + " " + androidBoxID);
+        }
+
+        binding.tvRoomName.setText(areaName);
+        binding.tvRoomName2.setText(areaName);
 
         binding.btnMenuConfig.setOnClickListener(view -> {
             getActivity().onBackPressed();
@@ -225,9 +234,29 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
      */
     @Override
     public void onNewData(byte[] data) {
+
         mainLooper.post(() -> {
-            receive(data);
-            Toast.makeText(getActivity(), "getData", Toast.LENGTH_SHORT).show();
+            int len = data.length;
+            //byte[] buffer = null;
+            for (int i = 0; i < len; i++) {
+                if (data[i] == 0x02) {
+                    baos = new ByteArrayOutputStream();
+                    getdata = true;
+                }
+                if (getdata) {
+                    if (data[i] > 0x03) {
+                        baos.write(data[i]);
+                    } else if (data[i] == 0x03) {
+                        getdata = false;
+                        //Dua chuoi di xu ly
+                        receive(baos.toByteArray());
+                    }
+                }
+            }
+
+           // receive(data);
+          //  Toast.makeText(getActivity(), "getData " + HexDump.bytesToString(data), Toast.LENGTH_SHORT).show();
+
         });
     }
 
@@ -358,17 +387,16 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
 
     private void receive(byte[] data) {
+        String receiveString = HexDump.bytesToString(data);
 
-        SpannableStringBuilder spn = new SpannableStringBuilder();
+        binding.tvTextReceive.setText("Receive Text: " + receiveString);
+
+       /* SpannableStringBuilder spn = new SpannableStringBuilder();
         spn.append("receive " + data.length + " bytes\n");
         if (data.length > 0)
             spn.append(HexDump.dumpHexString(data) + "\n");
 
-        binding.receiveText.append(spn);
-
-        String receiveString = HexDump.bytesToString(data);
-
-        binding.tvTextReceive.setText("Receive Text: " + receiveString);
+        binding.receiveText.append(spn);*/
 
         try {
 
@@ -408,14 +436,20 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
                             int queueNumber = param1 & bitmaskA;
                             int room = param2 & bitmaskB;
-                            int direction = (param2 >> 14) & 0 & 0x03;
+                            int direction = (param2 >> 14) & 0x03;
 
                             OrderAndRoomItem item = new OrderAndRoomItem(queueNumber, direction, room);
                             int finalRoom = room;
                             listItem.removeIf(s -> s.getRoom() == finalRoom);
                             listItem.add(item);
 
-                            if (listItem.size() > prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3)) {
+                            int maxItem = 3;
+                            try {
+                                maxItem = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) * prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
+                            } catch (Exception ignored){
+                            }
+
+                            if (listItem.size() > maxItem) {
                                 listItem.remove(0);
                             }
 

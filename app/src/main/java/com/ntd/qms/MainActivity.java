@@ -12,7 +12,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String MY_PREFS_NAME = "shared_pref";
     public static final String KEY_DEVICE_ID = "key_device_id";
     public static final String KEY_ROOM_NAME = "key_room_name";
+    public static final String KEY_AREA_NAME = "key_area_name";
     public static final String KEY_LINE_NUMBER = "key_line_number";
+    public static final String KEY_COLUMN_NUMBER = "key_column_number";
     public static final String KEY_BAUD_RATE = "key_baud_rate";
 
     public static final String USB_DEVICE = "device";

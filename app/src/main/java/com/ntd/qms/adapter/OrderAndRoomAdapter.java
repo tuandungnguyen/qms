@@ -1,6 +1,7 @@
 package com.ntd.qms.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,14 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ntd.qms.MainActivity;
 import com.ntd.qms.R;
 import com.ntd.qms.data.OrderAndRoomItem;
 import com.ntd.qms.util.Utils;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapter.ViewHolder> {
     private AsyncListDiffer<OrderAndRoomItem> listItems = new AsyncListDiffer<>(this, new DIFFER_CALLBACK());
@@ -46,7 +50,9 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_and_room, parent, false);
 
         GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) itemView.getLayoutParams();
-        lp.height = parent.getMeasuredHeight() / 3;
+        SharedPreferences prefs = context.getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+        int lines = prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3);
+        lp.height = parent.getMeasuredHeight() / lines;
         itemView.setLayoutParams(lp);
 
         return new ViewHolder(itemView);

@@ -22,10 +22,11 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
     private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView text1, text2;
+        public TextView text1, text2, tvDeviceInfo;
 
         public ViewHolder(View v) {
             super(v);
+            tvDeviceInfo = v.findViewById(R.id.tvDeviceInfo);
             text1 = v.findViewById(R.id.text1);
             text2 = v.findViewById(R.id.text2);
         }

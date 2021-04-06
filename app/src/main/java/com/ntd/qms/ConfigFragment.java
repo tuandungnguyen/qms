@@ -41,6 +41,8 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
     private DeviceAdapter deviceAdapter;
     private int baudRate = 38400;
     private boolean withIoManager = true;
+    private int maxLines = 1; //Default = 1 line
+    private int maxColumns = 1; //Default = 1 column
 
     SharedPreferences prefs;
 
@@ -51,11 +53,15 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
 
-        binding.edtMaxLine.setText("" + prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1));
+
+
         binding.edtAndroidBoxID.setText("" + prefs.getInt(MainActivity.KEY_DEVICE_ID, 1));
-        binding.edtHouseName.setText(prefs.getString(MainActivity.KEY_ROOM_NAME, ""));
+        binding.edtRoom.setText(prefs.getString(MainActivity.KEY_ROOM_NAME, ""));
+        binding.edtArea.setText(prefs.getString(MainActivity.KEY_AREA_NAME, ""));
 
         baudRate = prefs.getInt(MainActivity.KEY_BAUD_RATE, 38400);
+        maxLines =  prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
+        maxColumns = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1);
 
         deviceAdapter = new DeviceAdapter(getActivity(), this);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
@@ -82,16 +88,30 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             }
         });
 
-        final String[] valuesTableView = getResources().getStringArray(R.array.table_type);
-        binding.spinnerTableViewMode.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item, valuesTableView));
-        binding.spinnerTableViewMode.setSelection(posBR, true);
+        final String[] valuesMaxLines = getResources().getStringArray(R.array.lines);
+        int posLines = java.util.Arrays.asList(valuesMaxLines).indexOf(String.valueOf(maxLines));
+        binding.spinnerTableViewMode.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item_number, valuesMaxLines));
+        binding.spinnerTableViewMode.setSelection(posLines, true);
         binding.spinnerTableViewMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-                /*baudRate = Integer.parseInt(valuesBR[pos]);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt(MainActivity.KEY_BAUD_RATE, baudRate);
-                editor.apply();*/
+                maxLines = Integer.parseInt(valuesMaxLines[pos]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        final String[] valuesMaxColumn = getResources().getStringArray(R.array.columns);
+        int posColumn = java.util.Arrays.asList(valuesMaxColumn).indexOf(String.valueOf(maxColumns));
+        binding.spinnerMaxColumn.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item_number, valuesMaxColumn));
+        binding.spinnerMaxColumn.setSelection(posColumn, true);
+        binding.spinnerMaxColumn.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                maxColumns = Integer.parseInt(valuesMaxColumn[pos]);
             }
 
             @Override
@@ -101,18 +121,21 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         });
 
         binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
-            if (binding.edtAndroidBoxID.getText().toString().isEmpty() || binding.edtHouseName.getText().toString().isEmpty()){
+            if (binding.edtAndroidBoxID.getText().toString().isEmpty() || binding.edtArea.getText().toString().isEmpty()){
                 Toast.makeText(getActivity(), "Blank field. Can not save", Toast.LENGTH_LONG).show();
             } else {
                 try {
-                    int maxLine = Integer.parseInt(binding.edtMaxLine.getText().toString());
+
                     int androidBoxID = Integer.parseInt(binding.edtAndroidBoxID.getText().toString());
-                    String roomName = binding.edtHouseName.getText().toString();
+                    String roomName = binding.edtRoom.getText().toString();
+                    String areaName = binding.edtArea.getText().toString();
 
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putInt(MainActivity.KEY_LINE_NUMBER, maxLine);
+                    editor.putInt(MainActivity.KEY_LINE_NUMBER, maxLines);
+                    editor.putInt(MainActivity.KEY_COLUMN_NUMBER, maxColumns);
                     editor.putInt(MainActivity.KEY_DEVICE_ID, androidBoxID);
                     editor.putString(MainActivity.KEY_ROOM_NAME, roomName);
+                    editor.putString(MainActivity.KEY_AREA_NAME, areaName);
                     editor.apply();
 
                     Toast.makeText(getActivity(), "Data is saved", Toast.LENGTH_LONG).show();
