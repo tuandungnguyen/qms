@@ -2,14 +2,11 @@
     <string name="app_name">Queue Management</string>
 
     <string name="devices">USB Devices</string>
-
-    <string name="room">Quầy</string>
-
     <string name="sample_text">Khu điều trị theo yêu cầu</string>
-
-    <string name="max_line">Số dòng hiển thị&#58;</string>
-    <string name="max_column">Số cột hiển thị&#58;</string>
-    <string name="area">Khu</string>
+    <string name="max_line">Số dòng&#58;</string>
+    <string name="max_column">Số cột&#58;</string>
+    <string name="place">Khu</string>
+    <string name="room">Quầy</string>
     <string name="room_2">Phòng</string>
 
     <string name="config">Cấu hình</string>

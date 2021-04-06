@@ -6,14 +6,11 @@ import android.content.SharedPreferences;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +24,6 @@ import com.hoho.android.usbserial.driver.UsbSerialProber;
 import com.ntd.qms.adapter.DeviceAdapter;
 import com.ntd.qms.data.DeviceItem;
 import com.ntd.qms.databinding.FragmentConfigBinding;
-import com.ntd.qms.util.HexDump;
 
 import java.util.ArrayList;
 
@@ -43,6 +39,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
     private boolean withIoManager = true;
     private int maxLines = 1; //Default = 1 line
     private int maxColumns = 1; //Default = 1 column
+    private int typeRoom = 0; //Default = 0
 
     SharedPreferences prefs;
 
@@ -53,15 +50,14 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
 
-
-
         binding.edtAndroidBoxID.setText("" + prefs.getInt(MainActivity.KEY_DEVICE_ID, 1));
         binding.edtRoom.setText(prefs.getString(MainActivity.KEY_ROOM_NAME, ""));
-        binding.edtArea.setText(prefs.getString(MainActivity.KEY_AREA_NAME, ""));
+        binding.edtArea.setText(prefs.getString(MainActivity.KEY_PLACE_NAME, ""));
 
         baudRate = prefs.getInt(MainActivity.KEY_BAUD_RATE, 38400);
         maxLines =  prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
         maxColumns = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1);
+        typeRoom = prefs.getInt(MainActivity.KEY_ROOM_TYPE, 0);
 
         deviceAdapter = new DeviceAdapter(getActivity(), this);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
@@ -90,9 +86,9 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
         final String[] valuesMaxLines = getResources().getStringArray(R.array.lines);
         int posLines = java.util.Arrays.asList(valuesMaxLines).indexOf(String.valueOf(maxLines));
-        binding.spinnerTableViewMode.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item_number, valuesMaxLines));
-        binding.spinnerTableViewMode.setSelection(posLines, true);
-        binding.spinnerTableViewMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spinnerMaxLine.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item_number, valuesMaxLines));
+        binding.spinnerMaxLine.setSelection(posLines, true);
+        binding.spinnerMaxLine.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
                 maxLines = Integer.parseInt(valuesMaxLines[pos]);
@@ -120,6 +116,21 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             }
         });
 
+        final String[] valuesRoom = getResources().getStringArray(R.array.rooms);
+        binding.spinnerRoom.setAdapter(new ArrayAdapter<>(getActivity(), R.layout.spinner_item_number, valuesRoom));
+        binding.spinnerRoom.setSelection(typeRoom, true);
+        binding.spinnerRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                typeRoom = pos;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
             if (binding.edtAndroidBoxID.getText().toString().isEmpty() || binding.edtArea.getText().toString().isEmpty()){
                 Toast.makeText(getActivity(), "Blank field. Can not save", Toast.LENGTH_LONG).show();
@@ -135,7 +146,8 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                     editor.putInt(MainActivity.KEY_COLUMN_NUMBER, maxColumns);
                     editor.putInt(MainActivity.KEY_DEVICE_ID, androidBoxID);
                     editor.putString(MainActivity.KEY_ROOM_NAME, roomName);
-                    editor.putString(MainActivity.KEY_AREA_NAME, areaName);
+                    editor.putString(MainActivity.KEY_PLACE_NAME, areaName);
+                    editor.putInt(MainActivity.KEY_ROOM_TYPE, typeRoom);
                     editor.apply();
 
                     Toast.makeText(getActivity(), "Data is saved", Toast.LENGTH_LONG).show();

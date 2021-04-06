@@ -156,7 +156,7 @@
                 android:layout_height="@dimen/dp_64">
 
                 <TextView
-                    android:id="@+id/tvDeviceId"
+                    android:id="@+id/tvRoom"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +204,7 @@
                 android:layout_height="@dimen/dp_64">
 
                 <TextView
-                    android:id="@+id/tvRoomName"
+                    android:id="@+id/tvPlace1"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -241,7 +241,7 @@
                 android:layout_height="@dimen/dp_64">
 
                 <TextView
-                    android:id="@+id/tvRoomName2"
+                    android:id="@+id/tvPlace2"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

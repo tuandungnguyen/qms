@@ -69,45 +69,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvConfigDisplay">
 
-                    <TextView
-                        android:id="@+id/tvDisplayMode"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/dp_16"
-                        android:visibility="gone"
-                        android:text="@string/display_mode"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGroupDisplayMode"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@+id/tvDisplayMode"
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <RadioButton
-                            android:id="@+id/rbtnCounterDisplay"
-                            android:layout_width="wrap_content"
-                            android:textSize="@dimen/sp_16"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dp_8"
-                            android:text="@string/counter_display"/>
-
-                        <RadioButton
-                            android:id="@+id/rbtnMainDisplay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/main_display"
-                            android:layout_marginStart="@dimen/dp_8"
-                            android:textSize="@dimen/sp_16"/>
-
-                    </RadioGroup>
 
                     <TextView
-                        android:id="@+id/tvTableViewMode"
+                        android:id="@+id/tvMaxLine"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/max_line"
@@ -115,17 +79,17 @@
                         android:layout_marginTop="@dimen/dp_8"
                         android:textSize="@dimen/sp_16"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/radioGroupDisplayMode" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <Spinner
-                        android:id="@+id/spinnerTableViewMode"
+                        android:id="@+id/spinnerMaxLine"
                         android:layout_width="wrap_content"
                         android:visibility="visible"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/dp_8"
                         android:minWidth="@dimen/dp_32"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvTableViewMode"
-                        app:layout_constraintStart_toEndOf="@+id/tvTableViewMode" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxLine"
+                        app:layout_constraintStart_toEndOf="@+id/tvMaxLine" />
 
                     <TextView
                         android:id="@+id/tvMaxColumn"
@@ -134,40 +98,21 @@
                         android:text="@string/max_column"
                         android:visibility="visible"
                         android:layout_marginTop="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_32"
                         android:textSize="@dimen/sp_16"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTableViewMode" />
+                        app:layout_constraintStart_toEndOf="@+id/spinnerMaxLine"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxLine" />
 
                     <Spinner
                         android:id="@+id/spinnerMaxColumn"
                         android:layout_width="wrap_content"
                         android:visibility="visible"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/dp_8"
                         android:minWidth="@dimen/dp_32"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxColumn"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxLine"
                         app:layout_constraintStart_toEndOf="@+id/tvMaxColumn" />
 
-                    <TextView
-                        android:id="@+id/tvMaxLine"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:textSize="@dimen/sp_16"
-                        android:visibility="gone"
-                        android:text="@string/max_line"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMaxColumn" />
-
-                    <EditText
-                        android:id="@+id/edtMaxLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:visibility="gone"
-                        android:textSize="@dimen/sp_16"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMaxLine" />
 
                     <TextView
                         android:id="@+id/tvAndroidBox"
@@ -177,46 +122,53 @@
                         android:layout_height="wrap_content"
                         android:text="@string/android_box_id"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edtMaxLine" />
+                        app:layout_constraintTop_toBottomOf="@id/spinnerMaxColumn" />
 
                     <EditText
                         android:id="@+id/edtAndroidBoxID"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:inputType="number"
+                        android:layout_marginStart="@dimen/dp_8"
                         android:textSize="@dimen/sp_16"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvAndroidBox" />
+                        android:imeOptions="actionDone"
+                        app:layout_constraintStart_toEndOf="@+id/tvAndroidBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAndroidBox" />
 
-                    <TextView
-                        android:id="@+id/tvRoom"
+                    <Spinner
+                        android:id="@+id/spinnerRoom"
                         android:layout_width="wrap_content"
+                        android:minHeight="@dimen/sp_16"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/sp_16"
-                        android:text="@string/room_2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edtAndroidBoxID" />
+                        app:layout_constraintTop_toTopOf="@id/edtRoom"
+                        app:layout_constraintBottom_toBottomOf="@id/edtRoom" />
 
                     <EditText
                         android:id="@+id/edtRoom"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:lines="1"
-                        android:textSize="@dimen/sp_16"
+                        android:layout_marginStart="@dimen/dp_8"
                         android:maxLines="1"
                         android:singleLine="true"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvRoom" />
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintTop_toBottomOf="@+id/edtAndroidBoxID"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerRoom" />
 
                     <TextView
                         android:id="@+id/tvArea"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/sp_16"
-                        android:text="@string/area"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="@string/place"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/edtRoom" />
+                        app:layout_constraintTop_toBottomOf="@id/spinnerRoom" />
 
                     <EditText
                         android:id="@+id/edtArea"

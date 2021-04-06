@@ -36,4 +36,9 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+
+    <string-array name="rooms">
+        <item>Quầy</item>
+        <item>Phòng</item>
+    </string-array>
 </resources>

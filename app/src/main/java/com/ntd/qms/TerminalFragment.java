@@ -167,25 +167,27 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         if (prefs.getInt(MainActivity.KEY_LINE_NUMBER,1) > 1){
             binding.layoutCounterDisplay.setVisibility(View.GONE);
             binding.layoutMainDisplay.setVisibility(View.VISIBLE);
-            binding.tvRoomName2.setSelected(true);
+            binding.tvPlace2.setSelected(true);
         } else {
             binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
             binding.layoutMainDisplay.setVisibility(View.GONE);
-            binding.tvRoomName.setSelected(true);
+            binding.tvPlace1.setSelected(true);
         }
 
         androidBoxID = prefs.getInt(MainActivity.KEY_DEVICE_ID, 1);
         roomName = prefs.getString(MainActivity.KEY_ROOM_NAME, "");
-        areaName = prefs.getString(MainActivity.KEY_AREA_NAME, "");
+        areaName = prefs.getString(MainActivity.KEY_PLACE_NAME, "");
 
         if (roomName!=null & !roomName.isEmpty()) {
-            binding.tvDeviceId.setText(roomName);
+            binding.tvRoom.setText(roomName);
         } else {
-            binding.tvDeviceId.setText(getActivity().getString(R.string.room) + " " + androidBoxID);
+            String[] valuesRoom = getResources().getStringArray(R.array.rooms);
+            String prefix = java.util.Arrays.asList(valuesRoom).get(prefs.getInt(MainActivity.KEY_ROOM_TYPE, 0));
+            binding.tvRoom.setText(prefix + " " + androidBoxID);
         }
 
-        binding.tvRoomName.setText(areaName);
-        binding.tvRoomName2.setText(areaName);
+        binding.tvPlace1.setText(areaName);
+        binding.tvPlace2.setText(areaName);
 
         binding.btnMenuConfig.setOnClickListener(view -> {
             getActivity().onBackPressed();
@@ -412,7 +414,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         //Counter Display
                         binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
                         binding.layoutMainDisplay.setVisibility(View.GONE);
-                        binding.tvRoomName.setSelected(true);
+                        binding.tvPlace1.setSelected(true);
 
                         //Check android box with second param.
                         if (receiveStrings[1].equals("" + androidBoxID)) {
@@ -426,7 +428,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         //Main Display
                         binding.layoutMainDisplay.setVisibility(View.VISIBLE);
                         binding.layoutCounterDisplay.setVisibility(View.GONE);
-                        binding.tvRoomName2.setSelected(true);
+                        binding.tvPlace2.setSelected(true);
 
                         try {
                             int param1 = Integer.parseInt(receiveStrings[3]);
