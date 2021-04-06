@@ -12,4 +12,33 @@
         <item>event: SerialInputOutputManager.onNewData()</item>
         <item>direct: UsbSerialPort.read()</item>
     </string-array>
+    <string-array name="table_type">
+        <item>1 cột - 2 dòng</item>
+        <item>1 cột - 3 dòng</item>
+        <item>1 cột - 3 dòng</item>
+        <item>1 cột - 5 dòng</item>
+        <item>2 cột - 2 dòng</item>
+        <item>2 cột - 3 dòng</item>
+        <item>2 cột - 4 dòng</item>
+        <item>2 cột - 5 dòng</item>
+    </string-array>
+
+    <string-array name="lines">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <string-array name="columns">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="rooms">
+        <item>Quầy</item>
+        <item>Phòng</item>
+    </string-array>
 </resources>

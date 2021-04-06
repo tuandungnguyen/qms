@@ -1,216 +1,317 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvConfigHeader"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/colorHeader"
-        android:gravity="center"
-        android:text="@string/config"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="64sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutConfig"
+        <TextView
+            android:id="@+id/tvConfigHeader"
             android:layout_width="match_parent"
-            android:layout_margin="16dp"
-            android:background="@drawable/layout_curved_bg"
-            android:layout_height="match_parent"
-            android:visibility="visible">
+            android:layout_height="@dimen/dp_64"
+            android:background="@color/colorHeader"
+            android:gravity="center"
+            android:text="@string/config"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_45"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/tvConfigDisplay"
-                android:text="@string/config_display"
-                android:textAllCaps="true"
-                android:textSize="32sp"
-                android:layout_margin="12dp"
-                android:textColor="@color/black"
-                android:textAlignment="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+        <View
+            android:id="@+id/btnCloseConfig"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/tvConfigHeader"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/dp_8"
+            android:background="@drawable/layout_curved_bg"
+            app:layout_constraintBottom_toTopOf="@id/btnSaveDeviceInfo"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutAndroidBoxInfo"
+                android:id="@+id/layoutConfig"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfigDisplay">
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:visibility="visible">
 
                 <TextView
-                    android:id="@+id/tvMaxLine"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvConfigDisplay"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/max_line"
+                    android:layout_margin="12dp"
+                    android:text="@string/config_display"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp_32"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/edtMaxLine"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutAndroidBoxInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:padding="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvMaxLine" />
-
-                <TextView
-                    android:id="@+id/tvAndroidBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Device ID: "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtMaxLine" />
-
-                <EditText
-                    android:id="@+id/edtAndroidBoxID"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvAndroidBox" />
-
-                <TextView
-                    android:id="@+id/tvHouseName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Khu: "
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtAndroidBoxID" />
-
-                <EditText
-                    android:id="@+id/edtHouseName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvHouseName" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvConfigDisplay">
 
 
+                    <TextView
+                        android:id="@+id/tvMaxLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/max_line"
+                        android:visibility="visible"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/btnSaveDeviceInfo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="SAVE"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/edtHouseName" />
+                    <Spinner
+                        android:id="@+id/spinnerMaxLine"
+                        android:layout_width="wrap_content"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:minWidth="@dimen/dp_32"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxLine"
+                        app:layout_constraintStart_toEndOf="@+id/tvMaxLine" />
+
+                    <TextView
+                        android:id="@+id/tvMaxColumn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/max_column"
+                        android:visibility="visible"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:layout_marginStart="@dimen/dp_32"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerMaxLine"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxLine" />
+
+                    <Spinner
+                        android:id="@+id/spinnerMaxColumn"
+                        android:layout_width="wrap_content"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:minWidth="@dimen/dp_32"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaxLine"
+                        app:layout_constraintStart_toEndOf="@+id/tvMaxColumn" />
+
+
+                    <TextView
+                        android:id="@+id/tvAndroidBox"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        android:layout_height="wrap_content"
+                        android:text="@string/android_box_id"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/spinnerMaxColumn" />
+
+                    <EditText
+                        android:id="@+id/edtAndroidBoxID"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        android:imeOptions="actionDone"
+                        app:layout_constraintStart_toEndOf="@+id/tvAndroidBox"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAndroidBox" />
+
+                    <Spinner
+                        android:id="@+id/spinnerRoom"
+                        android:layout_width="wrap_content"
+                        android:minHeight="@dimen/sp_16"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/edtRoom"
+                        app:layout_constraintBottom_toBottomOf="@id/edtRoom" />
+
+                    <EditText
+                        android:id="@+id/edtRoom"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:lines="1"
+                        android:layout_marginStart="@dimen/dp_8"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintTop_toBottomOf="@+id/edtAndroidBoxID"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/spinnerRoom" />
+
+                    <TextView
+                        android:id="@+id/tvArea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp_16"
+                        android:layout_marginTop="@dimen/dp_8"
+                        android:text="@string/place"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/spinnerRoom" />
+
+                    <EditText
+                        android:id="@+id/edtArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:lines="1"
+                        android:textSize="@dimen/sp_16"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvArea" />
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutListDevices"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/dp_8"
+            android:background="@drawable/layout_curved_bg"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/btnSaveDeviceInfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guidelineCenter"
+            app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
+
+            <TextView
+                android:id="@+id/tvConfigUSBSerial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="@string/config_usb_serial"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_32"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvBaudRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/baud_rate"
+                android:textSize="@dimen/sp_16"
+                android:paddingBottom="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvConfigUSBSerial" />
+
+            <Spinner
+                android:id="@+id/spinnerBaudRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:minWidth="64dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvBaudRate"
+                app:layout_constraintStart_toEndOf="@+id/tvBaudRate" />
+
+
+            <LinearLayout
+                android:id="@+id/layoutConfigUSBSerial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvConfigUSBSerial">
+
+                <Button
+                    android:id="@+id/btnRefreshDevices"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:lines="2"
+                    android:text="Refresh Devices" />
+
+                <Button
+                    android:id="@+id/btnBaudRate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:lines="2"
+                    android:text="@string/baud_rate" />
+
+                <Button
+                    android:id="@+id/btnReadMode"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:lines="2"
+                    android:text="Read Mode" />
+
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvDevices"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBaudRate" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </androidx.core.widget.NestedScrollView>
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineCenter"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutListDevices"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="visible"
-        android:background="@drawable/layout_curved_bg"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        app:layout_constraintStart_toEndOf="@+id/guidelineCenter"
-        app:layout_constraintTop_toBottomOf="@+id/tvConfigHeader">
-
-        <TextView
-            android:id="@+id/tvConfigUSBSerial"
-            android:text="@string/config_usb_serial"
-            android:textAllCaps="true"
-            android:textSize="32sp"
-            android:layout_margin="12dp"
-            android:textColor="@color/black"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnSaveDeviceInfo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <LinearLayout
-            android:id="@+id/layoutConfigUSBSerial"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:text="@string/save_config"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvConfigUSBSerial"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnRefreshDevices"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:lines="2"
-                android:layout_margin="8dp"
-                android:text="Refresh Devices" />
-
-            <Button
-                android:id="@+id/btnBaudRate"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:lines="2"
-                android:layout_margin="8dp"
-                android:layout_height="wrap_content"
-                android:text="Baud Rate" />
-
-            <Button
-                android:id="@+id/btnReadMode"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:lines="2"
-                android:layout_margin="8dp"
-                android:layout_height="wrap_content"
-                android:text="Read Mode" />
-
-        </LinearLayout>
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvDevices"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutConfigUSBSerial"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+</layout>

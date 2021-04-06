@@ -2,18 +2,28 @@
     <string name="app_name">Queue Management</string>
 
     <string name="devices">USB Devices</string>
-
-    <string name="room">Quầy</string>
-
     <string name="sample_text">Khu điều trị theo yêu cầu</string>
-    <string name="max_line">Số dòng hiển thị&#58;</string>
+    <string name="max_line">Số dòng&#58;</string>
+    <string name="max_column">Số cột&#58;</string>
+    <string name="place">Khu</string>
+    <string name="room">Quầy</string>
+    <string name="room_2">Phòng</string>
 
     <string name="config">Cấu hình</string>
     <string name="config_display">Cấu hình hiển thị</string>
     <string name="config_usb_serial">Cấu hình giao tiếp USB</string>
 
-    <string name="calling_number">Số Đang Gọi</string>
+    <string name="calling_number">Số đang gọi</string>
     <string name="calling_room">Quầy</string>
+    <string name="baud_rate">Baud Rate</string>
+
+    <string name="display_mode">Chế độ hiển thị</string>
+    <string name="main_display">Main Display</string>
+    <string name="counter_display">Counter Display</string>
+
+    <string name="table_view_mode">Danh sách hiển thị</string>
+    <string name="android_box_id">ID của thiết bị</string>
+    <string name="save_config">Lưu thông tin cấu hình</string>
 
 
 </resources>

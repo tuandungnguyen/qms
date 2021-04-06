@@ -11,8 +11,11 @@ import android.util.Log;
 
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utility class which services a {@link UsbSerialPort} in its {@link #run()} method.
@@ -80,8 +83,8 @@ public class SerialInputOutputManager implements Runnable {
     /**
      * setThreadPriority. By default use higher priority than UI thread to prevent data loss
      *
-     * @param threadPriority  see {@link Process#setThreadPriority(int)}
-     * */
+     * @param threadPriority see {@link Process#setThreadPriority(int)}
+     */
     public void setThreadPriority(int threadPriority) {
         if (mState != State.STOPPED)
             throw new IllegalStateException("threadPriority only configurable before SerialInputOutputManager is started");
@@ -93,7 +96,7 @@ public class SerialInputOutputManager implements Runnable {
      */
     public void setReadTimeout(int timeout) {
         // when set if already running, read already blocks and the new value will not become effective now
-        if(mReadTimeout == 0 && timeout != 0 && mState != State.STOPPED)
+        if (mReadTimeout == 0 && timeout != 0 && mState != State.STOPPED)
             throw new IllegalStateException("readTimeout only configurable before SerialInputOutputManager is started");
         mReadTimeout = timeout;
     }
@@ -126,11 +129,11 @@ public class SerialInputOutputManager implements Runnable {
     }
 
     public void setWriteBufferSize(int bufferSize) {
-        if(getWriteBufferSize() == bufferSize)
+        if (getWriteBufferSize() == bufferSize)
             return;
         synchronized (mWriteBufferLock) {
             ByteBuffer newWriteBuffer = ByteBuffer.allocate(bufferSize);
-            if(mWriteBuffer.position() > 0)
+            if (mWriteBuffer.position() > 0)
                 newWriteBuffer.put(mWriteBuffer.array(), 0, mWriteBuffer.position());
             mWriteBuffer = newWriteBuffer;
         }
@@ -175,7 +178,7 @@ public class SerialInputOutputManager implements Runnable {
         }
         Log.i(TAG, "Running ...");
         try {
-            if(mThreadPriority != Process.THREAD_PRIORITY_DEFAULT)
+            if (mThreadPriority != Process.THREAD_PRIORITY_DEFAULT)
                 Process.setThreadPriority(mThreadPriority);
             while (true) {
                 if (getState() != State.RUNNING) {
@@ -188,7 +191,7 @@ public class SerialInputOutputManager implements Runnable {
             Log.w(TAG, "Run ending due to exception: " + e.getMessage(), e);
             final Listener listener = getListener();
             if (listener != null) {
-              listener.onRunError(e);
+                listener.onRunError(e);
             }
         } finally {
             synchronized (this) {
@@ -209,9 +212,28 @@ public class SerialInputOutputManager implements Runnable {
             if (DEBUG) Log.d(TAG, "Read data len=" + len);
             final Listener listener = getListener();
             if (listener != null) {
-                final byte[] data = new byte[len];
-                System.arraycopy(buffer, 0, data, 0, len);
-                listener.onNewData(data);
+                /*boolean getdata = false;
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+                for (int i = 0; i < len; i++) {
+                    if (buffer[i] == 0x02) {
+                        baos = new ByteArrayOutputStream();
+                        getdata = true;
+                    }
+                    if (getdata) {
+                        if (buffer[i] > 0x03) {
+                            baos.write(buffer[i]);
+                        } else if (buffer[i] == 0x03) {
+                            getdata = false;
+                            //Dua chuoi di xu ly
+                            listener.onNewData(baos.toByteArray());
+                        }
+                    }
+                }*/
+
+               final byte[] data = new byte[len];
+               System.arraycopy(buffer, 0, data, 0, len);
+               listener.onNewData(data);
             }
         }
 

@@ -1,6 +1,7 @@
 package com.ntd.qms.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,17 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.AsyncListDiffer;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ntd.qms.MainActivity;
 import com.ntd.qms.R;
 import com.ntd.qms.data.OrderAndRoomItem;
+import com.ntd.qms.util.Utils;
 
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapter.ViewHolder> {
     private AsyncListDiffer<OrderAndRoomItem> listItems = new AsyncListDiffer<>(this, new DIFFER_CALLBACK());
@@ -43,6 +49,12 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
     public OrderAndRoomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_and_room, parent, false);
 
+        GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) itemView.getLayoutParams();
+        SharedPreferences prefs = context.getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+        int lines = prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3);
+        lp.height = parent.getMeasuredHeight() / lines;
+        itemView.setLayoutParams(lp);
+
         return new ViewHolder(itemView);
     }
 
@@ -54,7 +66,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         OrderAndRoomItem item = currentList.get(position);
 
-        holder.tvOrder.setText(item.getOrder());
+        holder.tvOrder.setText(Utils.formatQueueNumber(item.getQueueNumber(),4));
 
         holder.tvRoomName.setText(String.valueOf(item.getRoom()));
 
@@ -96,7 +108,6 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         return super.getItemId(position);
     }
 
-
     public AsyncListDiffer<OrderAndRoomItem> getDiffer() {
         return listItems;
     }
@@ -105,12 +116,12 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         @Override
         public boolean areItemsTheSame(OrderAndRoomItem oldItem, OrderAndRoomItem newItem) {
-            return (oldItem.getOrder().equals(newItem.getOrder()));
+            return (oldItem.getRoom() == newItem.getRoom());
         }
 
         @Override
         public boolean areContentsTheSame(OrderAndRoomItem oldItem, OrderAndRoomItem newItem) {
-            return (oldItem == newItem);
+            return (oldItem.getQueueNumber() == newItem.getQueueNumber());
         }
     }
 

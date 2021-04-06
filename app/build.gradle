@@ -8,13 +8,19 @@ android {
 
     defaultConfig {
         applicationId "com.ntd.qms"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
 
     buildTypes {
         release {
@@ -41,4 +47,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'me.grantland:autofittextview:0.2.1'
 }

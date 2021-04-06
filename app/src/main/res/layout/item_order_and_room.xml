@@ -2,28 +2,31 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:minHeight="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tvOrder"
         android:id="@+id/imvDirectionArrow"
-        android:padding="16dp"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
         android:src="@drawable/arrow_right"
         android:contentDescription="Direction" />
 
 
-    <TextView
+    <me.grantland.widget.AutofitTextView
         android:id="@+id/tvOrder"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="100sp"
+        android:textSize="@dimen/sp_45"
+        autofit:minTextSize="@dimen/sp_45"
         tools:text="1202"
         android:textColor="@color/blue"
         android:textAlignment="center"
@@ -32,11 +35,12 @@
         app:layout_constraintEnd_toStartOf="@id/imvDirectionArrow"/>
 
 
-    <TextView
+    <me.grantland.widget.AutofitTextView
         android:id="@+id/tvRoomName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textSize="100sp"
+        android:textSize="@dimen/sp_45"
+        autofit:minTextSize="@dimen/sp_45"
         tools:text="02"
         android:textAlignment="center"
         android:textColor="@color/blue"
