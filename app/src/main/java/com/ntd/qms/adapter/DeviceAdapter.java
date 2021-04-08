@@ -14,7 +14,6 @@ import com.ntd.qms.R;
 import com.ntd.qms.data.DeviceItem;
 
 import java.util.List;
-import java.util.Locale;
 
 public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder> {
     private AsyncListDiffer<DeviceItem> listDevices = new AsyncListDiffer<>(this, new DIFFER_CALLBACK());
@@ -52,14 +51,19 @@ public class DeviceAdapter extends RecyclerView.Adapter<DeviceAdapter.ViewHolder
 
         DeviceItem item = currentList.get(position);
 
-        if(item.getDriver() == null)
+       /* if(item.getDriver() == null)
             holder.text1.setText("<no driver>");
         else if(item.getDriver().getPorts().size() == 1)
             holder.text1.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver","") + ", Port unknown");
         else
             holder.text1.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver","")+", Port " + item.getPort());
 
-        holder.text2.setText(String.format(Locale.US, "Vendor %04X, Product %04X", item.getDevice().getVendorId(), item.getDevice().getProductId()));
+        holder.text2.setText(String.format(Locale.US, "Vendor %04X, Product %04X", item.getDevice().getVendorId(), item.getDevice().getProductId()));*/
+
+        if(item.getDriver() == null)
+            holder.tvDeviceInfo.setText("<no driver>" + ", Product " + item.getDevice().getProductId());
+        else
+            holder.tvDeviceInfo.setText(item.getDriver().getClass().getSimpleName().replace("SerialDriver","") + ", Product " + item.getDevice().getProductId());
 
 
         holder.itemView.setOnClickListener(view -> {

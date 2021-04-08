@@ -38,4 +38,13 @@ public class DeviceItem {
         this.port = port;
         this.driver = driver;
     }
+
+    @Override
+    public String toString() {
+
+        if (getDriver() == null)
+          return "<no driver>" + ", Product " + getDevice().getProductId();
+        else
+           return getDriver().getClass().getSimpleName().replace("SerialDriver","") + ", Product " + getDevice().getProductId();
+    }
 }

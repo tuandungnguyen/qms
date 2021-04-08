@@ -117,12 +117,13 @@
                     <TextView
                         android:id="@+id/tvAndroidBox"
                         android:layout_width="wrap_content"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:textSize="@dimen/sp_16"
                         android:layout_height="wrap_content"
                         android:text="@string/android_box_id"
+                        android:textSize="@dimen/sp_16"
+                        app:layout_constraintBottom_toBottomOf="@+id/edtAndroidBoxID"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/spinnerMaxColumn" />
+                        app:layout_constraintTop_toTopOf="@+id/edtAndroidBoxID"
+                        app:layout_constraintVertical_bias="0.0" />
 
                     <EditText
                         android:id="@+id/edtAndroidBoxID"
@@ -130,11 +131,15 @@
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:layout_marginStart="@dimen/dp_8"
+                        android:layout_marginTop="@dimen/dp_8"
                         android:textSize="@dimen/sp_16"
+                        android:paddingHorizontal="@dimen/dp_8"
+                        android:paddingVertical="@dimen/dp_4"
+                        android:background="@drawable/layout_curved_bg"
                         android:imeOptions="actionDone"
                         app:layout_constraintStart_toEndOf="@+id/tvAndroidBox"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvAndroidBox" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvMaxLine" />
 
                     <Spinner
                         android:id="@+id/spinnerRoom"
@@ -150,12 +155,15 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
+                        android:background="@drawable/layout_curved_bg"
                         android:lines="1"
                         android:layout_marginStart="@dimen/dp_8"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:layout_marginTop="@dimen/dp_8"
                         android:textSize="@dimen/sp_16"
+                        android:paddingHorizontal="@dimen/dp_8"
+                        android:paddingVertical="@dimen/dp_4"
                         app:layout_constraintTop_toBottomOf="@+id/edtAndroidBoxID"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/spinnerRoom" />
@@ -176,7 +184,10 @@
                         android:layout_height="wrap_content"
                         android:imeOptions="actionDone"
                         android:lines="1"
+                        android:paddingHorizontal="@dimen/dp_8"
+                        android:paddingVertical="@dimen/dp_4"
                         android:textSize="@dimen/sp_16"
+                        android:background="@drawable/layout_curved_bg"
                         android:maxLines="1"
                         android:singleLine="true"
                         app:layout_constraintStart_toStartOf="parent"
@@ -250,6 +261,28 @@
                 app:layout_constraintStart_toEndOf="@+id/tvBaudRate" />
 
 
+            <TextView
+                android:id="@+id/tvUSBDevices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/usb_device"
+                android:textSize="@dimen/sp_16"
+                android:paddingBottom="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvBaudRate" />
+
+            <Spinner
+                android:id="@+id/spinnerUSBDevices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:minWidth="64dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvUSBDevices"
+                app:layout_constraintStart_toEndOf="@+id/tvUSBDevices" />
+
+
             <LinearLayout
                 android:id="@+id/layoutConfigUSBSerial"
                 android:layout_width="match_parent"
@@ -296,7 +329,7 @@
                 android:layout_margin="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvBaudRate" />
+                app:layout_constraintTop_toBottomOf="@+id/tvUSBDevices" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

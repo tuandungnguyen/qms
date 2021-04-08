@@ -60,10 +60,6 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         typeRoom = prefs.getInt(MainActivity.KEY_ROOM_TYPE, 0);
 
         deviceAdapter = new DeviceAdapter(getActivity(), this);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, RecyclerView.VERTICAL, false);
-        binding.rcvDevices.setLayoutManager(layoutManager);
-        binding.rcvDevices.setAdapter(deviceAdapter);
-
 
         final String[] valuesBR = getResources().getStringArray(R.array.baud_rates);
         int posBR = java.util.Arrays.asList(valuesBR).indexOf(String.valueOf(baudRate));
@@ -148,6 +144,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                     editor.putString(MainActivity.KEY_ROOM_NAME, roomName);
                     editor.putString(MainActivity.KEY_PLACE_NAME, areaName);
                     editor.putInt(MainActivity.KEY_ROOM_TYPE, typeRoom);
+                    editor.putBoolean(MainActivity.KEY_FIRST_TIME_OPEN, false);
                     editor.apply();
 
                     Toast.makeText(getActivity(), "Data is saved", Toast.LENGTH_LONG).show();
@@ -156,24 +153,11 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                     Toast.makeText(getActivity(), "Error when parsing data", Toast.LENGTH_LONG).show();
                 }
             }
+
+            binding.btnCloseConfig.callOnClick();
         });
 
         binding.btnRefreshDevices.setOnClickListener(view1 ->  refresh());
-
-        /*
-        binding.btnBaudRate.setOnClickListener(view1 -> {
-            final String[] values = getResources().getStringArray(R.array.baud_rates);
-            int pos = java.util.Arrays.asList(values).indexOf(String.valueOf(baudRate));
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Baud rate");
-            builder.setSingleChoiceItems(values, pos, (dialog, which) -> {
-                baudRate = Integer.parseInt(values[which]);
-                dialog.dismiss();
-            });
-            builder.create().show();
-        });
-
-         */
 
         binding.btnReadMode.setOnClickListener(view1 -> {
             final String[] values = getResources().getStringArray(R.array.read_modes);
@@ -199,19 +183,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").addToBackStack(null).commit();
         });
 
-
         return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        /*setListAdapter(null);
-        View header = getActivity().getLayoutInflater().inflate(R.layout.device_list_header, null, false);
-        getListView().addHeaderView(header, null, false);
-        setEmptyText("<no USB devices found>");
-        ((TextView) getListView().getEmptyView()).setTextSize(18);
-        setListAdapter(listAdapter);*/
     }
 
 
@@ -221,7 +193,6 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         super.onResume();
         refresh();
     }
-
 
 
     void refresh() {
@@ -242,7 +213,21 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             }
         }
         //deviceAdapter.notifyDataSetChanged();
-        deviceAdapter.getDiffer().submitList(listItems);
+
+        ArrayAdapter<DeviceItem> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, listItems);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        binding.spinnerUSBDevices.setAdapter(adapter);
+        binding.spinnerUSBDevices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                onSelectDevice(listItems.get(pos));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
 
@@ -259,14 +244,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             editor.putBoolean(MainActivity.USB_IO_MANAGER, withIoManager);
             editor.apply();
 
-            Bundle args = new Bundle();
-            args.putInt("device", item.getDevice().getDeviceId());
-            args.putInt("port", item.getPort());
-            args.putInt("baud", baudRate);
-            args.putBoolean("withIoManager", withIoManager);
-            Fragment fragment = new TerminalFragment();
-            fragment.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").addToBackStack(null).commit();
+            Toast.makeText(getActivity(), getString(R.string.selected_devices), Toast.LENGTH_SHORT).show();
         }
     }
 

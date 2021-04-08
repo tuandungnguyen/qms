@@ -190,7 +190,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         binding.tvPlace2.setText(areaName);
 
         binding.btnMenuConfig.setOnClickListener(view -> {
-            getActivity().onBackPressed();
+            if (getFragmentManager() != null) {
+                getFragmentManager().beginTransaction().replace(R.id.fragment, new ConfigFragment(), "devices").addToBackStack(null).commit();
+            }
         });
 
         binding.btnSendTestData.setOnClickListener(view -> {

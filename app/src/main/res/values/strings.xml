@@ -16,6 +16,7 @@
     <string name="calling_number">Số đang gọi</string>
     <string name="calling_room">Quầy</string>
     <string name="baud_rate">Baud Rate</string>
+    <string name="usb_device">Thiết bị USB</string>
 
     <string name="display_mode">Chế độ hiển thị</string>
     <string name="main_display">Main Display</string>
@@ -24,6 +25,7 @@
     <string name="table_view_mode">Danh sách hiển thị</string>
     <string name="android_box_id">ID của thiết bị</string>
     <string name="save_config">Lưu thông tin cấu hình</string>
+    <string name="selected_devices">Đã chọn thiết bị</string>
 
 
 </resources>
