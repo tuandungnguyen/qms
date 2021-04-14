@@ -31,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.encoders.annotations.Encodable;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -198,6 +199,23 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         binding.btnSendTestData.setOnClickListener(view -> {
             sendTestData();
         });
+
+
+
+        if (prefs.getInt(MainActivity.KEY_COLUMN_NUMBER,1) == 1){
+            binding.tvCallingNumber2.setVisibility(View.GONE);
+            binding.tvCallingRoom2.setVisibility(View.GONE);
+        }
+
+        try {
+            String[] valuesRoom = getResources().getStringArray(R.array.rooms);
+            String prefix = java.util.Arrays.asList(valuesRoom).get(prefs.getInt(MainActivity.KEY_ROOM_TYPE, 0));
+            binding.tvCallingRoom1.setText(prefix);
+            binding.tvCallingRoom2.setText(prefix);
+        } catch (Exception ignored){
+
+        }
+
 
         return binding.getRoot();
     }
@@ -461,6 +479,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             newListItem.addAll(listItem);
 
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
+                            orderAndRoomAdapter.notifyDataSetChanged();
 
 
                         } catch (Exception ex) {

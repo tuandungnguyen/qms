@@ -129,7 +129,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
         binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
             if (binding.edtAndroidBoxID.getText().toString().isEmpty() || binding.edtArea.getText().toString().isEmpty()){
-                Toast.makeText(getActivity(), "Blank field. Can not save", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), getString(R.string.miss_data), Toast.LENGTH_LONG).show();
             } else {
                 try {
 
@@ -147,7 +147,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                     editor.putBoolean(MainActivity.KEY_FIRST_TIME_OPEN, false);
                     editor.apply();
 
-                    Toast.makeText(getActivity(), "Data is saved", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), getString(R.string.saved_config), Toast.LENGTH_LONG).show();
 
                 } catch (Exception ex) {
                     Toast.makeText(getActivity(), "Error when parsing data", Toast.LENGTH_LONG).show();

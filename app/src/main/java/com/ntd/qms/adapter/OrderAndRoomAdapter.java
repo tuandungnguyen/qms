@@ -93,6 +93,12 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
                     throw new IllegalStateException("Unexpected value: " + item.getDirection());
             }
 
+            if (position % 2 == 0){
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
+            } else {
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            }
+
         } catch (Exception ex){
 
         }

@@ -150,27 +150,27 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bannerCounterDisplay"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_64"
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="@dimen/dp_64">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tvRoom"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_height="wrap_content"
-                    tools:text="@string/sample_text"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
-                    android:scrollHorizontally="true"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_45" />
+                    android:textSize="@dimen/sp_45"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/sample_text" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -198,26 +198,26 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/footerCounterDisplay"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_64"
                 android:background="@color/blue"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_height="@dimen/dp_64">
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
                     android:id="@+id/tvPlace1"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
-                    android:scrollHorizontally="true"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_45" />
+                    android:textSize="@dimen/sp_45"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -235,27 +235,27 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bannerMainDisplay"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_64"
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="@dimen/dp_64">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tvPlace2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:text="@string/sample_text"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit ="marquee_forever"
-                    android:scrollHorizontally="true"
-                    android:layout_width="wrap_content"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_45" />
+                    android:textSize="@dimen/sp_45"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -268,54 +268,75 @@
                 app:layout_constraintTop_toBottomOf="@id/bannerMainDisplay">
 
                 <Button
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/btnSendTestData"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:text="Send Test Data"
-                    android:id="@+id/btnSendTestData"/>
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
 
                 <EditText
                     android:id="@+id/edtTestData"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:hint="Please enter test data"
                     android:singleLine="true"
                     android:visibility="gone"
-                    app:layout_constraintTop_toTopOf="@+id/btnSendTestData"
-                    app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
-                    android:layout_marginStart="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:hint="Please enter test data"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"/>
+                    app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
+                    app:layout_constraintTop_toTopOf="@+id/btnSendTestData" />
 
 
                 <LinearLayout
                     android:id="@+id/layoutMainDisplayHeader"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/dp_64"
                     android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/btnSendTestData">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCallingNumber1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/sp_32"
                         android:layout_weight="1"
+                        android:gravity="center|center"
                         android:text="@string/calling_number"
-                        android:textAlignment="center"
-                        android:textColor="@color/red"
-                        android:textSize="64sp" />
+                        android:textColor="@color/red" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCallingRoom1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:textSize="@dimen/sp_32"
+                        android:gravity="center|center"
                         android:text="@string/calling_room"
-                        android:textAlignment="center"
-                        android:textColor="@color/red"
-                        android:textSize="64sp" />
+                        android:textColor="@color/red" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCallingNumber2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/sp_32"
+                        android:gravity="center|center"
+                        android:text="@string/calling_number"
+                        android:textColor="@color/red" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvCallingRoom2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/sp_32"
+                        android:layout_weight="1"
+                        android:gravity="center|center"
+                        android:text="@string/calling_room"
+                        android:textColor="@color/red" />
 
 
                 </LinearLayout>
@@ -339,8 +360,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_8"
             android:textColor="@color/white"
-            android:visibility="gone"
             android:textSize="@dimen/sp_16"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Receive Text" />
@@ -349,11 +370,11 @@
             android:id="@+id/btnMenuConfig"
             android:layout_width="0dp"
             android:layout_height="@dimen/dp_64"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:clickable="true"
-            android:focusable="true" />
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

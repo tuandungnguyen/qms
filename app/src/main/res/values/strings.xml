@@ -12,6 +12,8 @@
     <string name="config">Cấu hình</string>
     <string name="config_display">Cấu hình hiển thị</string>
     <string name="config_usb_serial">Cấu hình giao tiếp USB</string>
+    <string name="saved_config">Đã lưu cấu hình thành công.</string>
+    <string name="miss_data">Vui lòng nhập vào đầy đủ thông tin.</string>
 
     <string name="calling_number">Số đang gọi</string>
     <string name="calling_room">Quầy</string>

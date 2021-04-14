@@ -2,11 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="36dp"
     android:layout_gravity="center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/layout_border_bg"
-    xmlns:autofit="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ImageView
@@ -15,6 +14,7 @@
         app:layout_constraintTop_toTopOf="@id/tvOrder"
         app:layout_constraintBottom_toBottomOf="@id/tvOrder"
         android:id="@+id/imvDirectionArrow"
+        android:visibility="gone"
         android:maxHeight="@dimen/dp_64"
         android:padding="@dimen/dp_16"
         android:layout_width="@dimen/dp_64"
@@ -22,51 +22,39 @@
         android:src="@drawable/arrow_right"
         android:contentDescription="Direction" />
 
-    <View
-        android:id="@+id/viewLeft"
-        android:layout_width="2dp"
-        android:background="@color/grey"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/tvOrder"
-        app:layout_constraintBottom_toBottomOf="@id/tvOrder"
-        app:layout_constraintStart_toEndOf="@+id/tvOrder"/>
 
-    <View
-        android:id="@+id/viewRight"
-        android:layout_width="2dp"
-        android:background="@color/grey"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/tvOrder"
-        app:layout_constraintBottom_toBottomOf="@id/tvOrder"
-        app:layout_constraintEnd_toStartOf="@+id/tvRoomName"/>
 
-    <me.grantland.widget.AutofitTextView
+
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOrder"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_64"
-        autofit:minTextSize="@dimen/sp_64"
-        tools:text="1202"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="center|center"
         android:textColor="@color/blue"
-        android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="parent"
+        app:autoSizePresetSizes="@array/autosize_text_sizes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/imvDirectionArrow"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imvDirectionArrow"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1202" />
 
 
-    <me.grantland.widget.AutofitTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvRoomName"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_64"
-        autofit:minTextSize="@dimen/sp_64"
-        tools:text="02"
+        android:layout_height="0dp"
+        android:autoSizeTextType="uniform"
         android:textAlignment="center"
         android:textColor="@color/blue"
-        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center|center"
+        app:autoSizePresetSizes="@array/autosize_text_sizes"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imvDirectionArrow"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="02" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
