@@ -1,15 +1,20 @@
 package com.ntd.qms;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
 
     public static final String MY_PREFS_NAME = "shared_pref";
+    public static final String KEY_FIRST_TIME_OPEN = "key_first_time_open";
     public static final String KEY_DEVICE_ID = "key_device_id";
     public static final String KEY_ROOM_TYPE = "key_room_type";
     public static final String KEY_ROOM_NAME = "key_room_name";
@@ -29,11 +34,31 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       /* DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+        Toast.makeText(this, "WxH="+dpWidth+"x"+dpHeight, Toast.LENGTH_LONG).show();*/
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
-        if (savedInstanceState == null)
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment, new ConfigFragment(), "devices").commit();
+
+        if (savedInstanceState == null){
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+            if (prefs.getBoolean(KEY_FIRST_TIME_OPEN, false)) {
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment, new ConfigFragment(), "devices").commit();
+            } else {
+                Bundle args = new Bundle();
+                args.putInt("device", prefs.getInt(MainActivity.USB_DEVICE, 0));
+                args.putInt("port", prefs.getInt(MainActivity.USB_PORT, 0));
+                args.putInt("baud", prefs.getInt(MainActivity.KEY_BAUD_RATE, 0));
+                args.putBoolean("withIoManager", prefs.getBoolean(USB_IO_MANAGER, true));
+                Fragment fragment = new TerminalFragment();
+                fragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction().add(R.id.fragment, fragment, "devices").commit();
+            }
+        }
         else
             onBackStackChanged();
     }
