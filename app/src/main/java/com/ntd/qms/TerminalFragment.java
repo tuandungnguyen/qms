@@ -144,8 +144,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
 
-        orderAndRoomAdapter = new OrderAndRoomAdapter(getActivity());
+
         int maxColumn = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1);
+        orderAndRoomAdapter = new OrderAndRoomAdapter(getActivity(), maxColumn);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), maxColumn, RecyclerView.VERTICAL, false);
         binding.rcvOrders.setLayoutManager(layoutManager);
         binding.rcvOrders.setAdapter(orderAndRoomAdapter);
@@ -165,7 +166,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
 
 
-        if (prefs.getInt(MainActivity.KEY_LINE_NUMBER,1) > 1){
+        if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {
             binding.layoutCounterDisplay.setVisibility(View.GONE);
             binding.layoutMainDisplay.setVisibility(View.VISIBLE);
             binding.tvPlace2.setSelected(true);
@@ -179,7 +180,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         roomName = prefs.getString(MainActivity.KEY_ROOM_NAME, "");
         areaName = prefs.getString(MainActivity.KEY_PLACE_NAME, "");
 
-        if (roomName!=null & !roomName.isEmpty()) {
+        if (roomName != null & !roomName.isEmpty()) {
             binding.tvRoom.setText(roomName);
         } else {
             String[] valuesRoom = getResources().getStringArray(R.array.rooms);
@@ -192,7 +193,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         binding.btnMenuConfig.setOnClickListener(view -> {
             if (getFragmentManager() != null) {
-                getFragmentManager().beginTransaction().replace(R.id.fragment, new ConfigFragment(), "devices").addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment, new ConfigFragment(), "devices").commit();
             }
         });
 
@@ -201,8 +202,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         });
 
 
-
-        if (prefs.getInt(MainActivity.KEY_COLUMN_NUMBER,1) == 1){
+        if (prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) == 1) {
             binding.tvCallingNumber2.setVisibility(View.GONE);
             binding.tvCallingRoom2.setVisibility(View.GONE);
         }
@@ -212,7 +212,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             String prefix = java.util.Arrays.asList(valuesRoom).get(prefs.getInt(MainActivity.KEY_ROOM_TYPE, 0));
             binding.tvCallingRoom1.setText(prefix);
             binding.tvCallingRoom2.setText(prefix);
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
 
         }
 
@@ -276,8 +276,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 }
             }
 
-           // receive(data);
-          //  Toast.makeText(getActivity(), "getData " + HexDump.bytesToString(data), Toast.LENGTH_SHORT).show();
+            // receive(data);
+            //  Toast.makeText(getActivity(), "getData " + HexDump.bytesToString(data), Toast.LENGTH_SHORT).show();
 
         });
     }
@@ -361,7 +361,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     }
 
     private void send(String str) {
-       if (!connected) {
+        if (!connected) {
             Toast.makeText(getActivity(), "not connected", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -398,15 +398,11 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     }
 
 
-
     private void sendTestData() {
         String dataString = binding.edtTestData.getText().toString();
-        receive(dataString);
+        byte[] bs = dataString.getBytes();
+        receive(bs);
     }
-    private void receive(String demo){
-    }
-
-
 
     private void receive(byte[] data) {
         String receiveString = HexDump.bytesToString(data);
@@ -468,7 +464,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             int maxItem = 3;
                             try {
                                 maxItem = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) * prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
-                            } catch (Exception ignored){
+                            } catch (Exception ignored) {
                             }
 
                             if (listItem.size() > maxItem) {
@@ -479,7 +475,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             newListItem.addAll(listItem);
 
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
-                            orderAndRoomAdapter.notifyDataSetChanged();
+                            if (listItem != null && listItem.size() > 0)
+                                orderAndRoomAdapter.notifyItemChanged(listItem.size() - 1);
+                            // orderAndRoomAdapter.notifyDataSetChanged();
 
 
                         } catch (Exception ex) {
@@ -489,7 +487,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 }
             }
 
-        } catch (Exception ex){
+        } catch (Exception ex) {
             Toast.makeText(getActivity(), "Error: " + ex.getMessage(), Toast.LENGTH_LONG).show();
         }
 

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.util.ArrayUtils;
 import com.ntd.qms.MainActivity;
 import com.ntd.qms.R;
 import com.ntd.qms.data.OrderAndRoomItem;
@@ -27,6 +29,12 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
     private AsyncListDiffer<OrderAndRoomItem> listItems = new AsyncListDiffer<>(this, new DIFFER_CALLBACK());
 
     private Context context;
+    private int typeColumn;
+
+    private static int TYPE_1_COLUMN = 1;
+
+    private static int BACKGROUND_WHITE = 1;
+    private static int BACKGROUND_GREY = 2;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvOrder, tvRoomName;
@@ -40,9 +48,31 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         }
     }
 
-    public OrderAndRoomAdapter(Context context) {
+    public OrderAndRoomAdapter(Context context, int mTypeColumn) {
         this.context = context;
+        this.typeColumn = mTypeColumn;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        try {
+            if (typeColumn == TYPE_1_COLUMN) {
+                if (position % 2 == 1)
+                    return BACKGROUND_WHITE;
+                else return BACKGROUND_GREY;
+            } else {
+                if (ArrayUtils.contains(new int[]{0,1,4,5,8,9, 12,13}, position)){
+                    return BACKGROUND_GREY;
+                } else {
+                    return BACKGROUND_WHITE;
+                }
+            }
+        } catch (Exception ex) {
+            return BACKGROUND_WHITE;
+        }
+    }
+
+
 
 
     @Override
@@ -55,6 +85,11 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         lp.height = parent.getMeasuredHeight() / lines;
         itemView.setLayoutParams(lp);
 
+        if (viewType == BACKGROUND_WHITE)
+            itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
+        else
+            itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_grey));
+
         return new ViewHolder(itemView);
     }
 
@@ -66,40 +101,39 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         OrderAndRoomItem item = currentList.get(position);
 
-        holder.tvOrder.setText(Utils.formatQueueNumber(item.getQueueNumber(),4));
+        holder.tvOrder.setText(Utils.formatQueueNumber(item.getQueueNumber(), 4));
 
         holder.tvRoomName.setText(String.valueOf(item.getRoom()));
 
+        if (getItemCount() > 0 && position == getItemCount() - 1){
+            holder.tvOrder.setAnimation(AnimationUtils.loadAnimation(context, R.anim.blink));
+            holder.tvRoomName.setAnimation(AnimationUtils.loadAnimation(context, R.anim.blink));
+        }
+
         try {
-            switch (item.getDirection()){
+            switch (item.getDirection()) {
 
                 case 0:
                     holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.arrow_left));
                     break;
 
                 case 1:
-                    holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.arrow_right));
+                    holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.arrow_right));
                     break;
 
                 case 2:
-                    holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.arrow_up));
+                    holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.arrow_up));
                     break;
 
                 case 3:
-                    holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.arrow_down));
+                    holder.imvDirectionArrow.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.arrow_down));
                     break;
 
                 default:
                     throw new IllegalStateException("Unexpected value: " + item.getDirection());
             }
 
-            if (position % 2 == 0){
-                holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
-            } else {
-                holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-            }
-
-        } catch (Exception ex){
+        } catch (Exception ex) {
 
         }
     }

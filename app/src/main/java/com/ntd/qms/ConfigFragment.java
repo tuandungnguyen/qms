@@ -180,7 +180,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             args.putBoolean("withIoManager", withIoManager);
             Fragment fragment = new TerminalFragment();
             fragment.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").commit();
         });
 
         return binding.getRoot();

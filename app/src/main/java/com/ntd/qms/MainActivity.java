@@ -34,11 +34,11 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+       /* DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        Toast.makeText(this, "WxH="+dpWidth+"x"+dpHeight, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "WxH="+dpWidth+"x"+dpHeight, Toast.LENGTH_LONG).show();*/
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
