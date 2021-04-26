@@ -5,7 +5,7 @@
     <string name="sample_text">Khu điều trị theo yêu cầu</string>
     <string name="max_line">Số dòng&#58;</string>
     <string name="max_column">Số cột&#58;</string>
-    <string name="place">Khu</string>
+    <string name="place">Khu - Địa điểm</string>
     <string name="room">Quầy</string>
     <string name="room_2">Phòng</string>
 
@@ -13,6 +13,8 @@
     <string name="config_display">Cấu hình hiển thị</string>
     <string name="config_usb_serial">Cấu hình giao tiếp USB</string>
     <string name="saved_config">Đã lưu cấu hình thành công.</string>
+    <string name="miss_data_android_box">Vui lòng nhập ID của thiết bị.</string>
+    <string name="miss_data_area">Vui lòng nhập dữ liệu cho Khu - Địa điểm</string>
     <string name="miss_data">Vui lòng nhập vào đầy đủ thông tin.</string>
 
     <string name="calling_number">Số đang gọi</string>

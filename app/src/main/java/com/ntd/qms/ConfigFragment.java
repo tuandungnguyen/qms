@@ -128,8 +128,10 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         });
 
         binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
-            if (binding.edtAndroidBoxID.getText().toString().isEmpty() || binding.edtArea.getText().toString().isEmpty()){
-                Toast.makeText(getActivity(), getString(R.string.miss_data), Toast.LENGTH_LONG).show();
+            if (binding.edtAndroidBoxID.getText().toString().isEmpty()){
+                Toast.makeText(getActivity(), getString(R.string.miss_data_android_box), Toast.LENGTH_LONG).show();
+            } else if (binding.edtArea.getText().toString().isEmpty()){
+                Toast.makeText(getActivity(), getString(R.string.miss_data_area), Toast.LENGTH_LONG).show();
             } else {
                 try {
 
@@ -149,12 +151,14 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
                     Toast.makeText(getActivity(), getString(R.string.saved_config), Toast.LENGTH_LONG).show();
 
+                    binding.btnCloseConfig.callOnClick();
+
                 } catch (Exception ex) {
                     Toast.makeText(getActivity(), "Error when parsing data", Toast.LENGTH_LONG).show();
                 }
-            }
 
-            binding.btnCloseConfig.callOnClick();
+
+            }
         });
 
         binding.btnRefreshDevices.setOnClickListener(view1 ->  refresh());
@@ -209,10 +213,10 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                 for(int port = 0; port < driver.getPorts().size(); port++)
                     listItems.add(new DeviceItem(device, port, driver));
             } else {
-                listItems.add(new DeviceItem(device, 0, null));
+               // listItems.add(new DeviceItem(device, 0, null));
             }
         }
-        //deviceAdapter.notifyDataSetChanged();
+
 
         ArrayAdapter<DeviceItem> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, listItems);
         adapter.setDropDownViewResource(R.layout.spinner_item);
