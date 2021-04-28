@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -188,6 +189,26 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
                     android:textSize="@dimen/sp_200"
+                    android:singleLine="true"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/sp_200"
+                    android:text="@string/status_welcome"
+                    android:visibility="visible"
+                    android:singleLine="true"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:scrollHorizontally="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -267,28 +288,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/bannerMainDisplay">
 
-                <Button
-                    android:id="@+id/btnSendTestData"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Send Test Data"
-                    android:visibility="gone"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <EditText
-                    android:id="@+id/edtTestData"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:hint="Please enter test data"
-                    android:singleLine="true"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
-                    app:layout_constraintTop_toTopOf="@+id/btnSendTestData" />
-
 
                 <LinearLayout
                     android:id="@+id/layoutMainDisplayHeader"
@@ -296,47 +295,47 @@
                     android:layout_height="@dimen/dp_64"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnSendTestData">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvCallingNumber1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/sp_32"
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="@string/calling_number"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_32" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvCallingRoom1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="@dimen/sp_32"
                         android:gravity="center|center"
                         android:text="@string/calling_room"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_32" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvCallingNumber2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="@dimen/sp_32"
                         android:gravity="center|center"
                         android:text="@string/calling_number"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_32" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvCallingRoom2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:textSize="@dimen/sp_32"
                         android:layout_weight="1"
                         android:gravity="center|center"
                         android:text="@string/calling_room"
-                        android:textColor="@color/red" />
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_32" />
 
 
                 </LinearLayout>
@@ -354,17 +353,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tvTextReceive"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp_8"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_16"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Receive Text" />
 
         <View
             android:id="@+id/btnMenuConfig"
@@ -376,6 +364,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/test_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <Button
+                android:id="@+id/btnSendTestData"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send Test Data"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <EditText
+                android:id="@+id/edtTestData"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:hint="Please enter test data"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
+                app:layout_constraintTop_toTopOf="@+id/btnSendTestData" />
+
+
+            <TextView
+                android:id="@+id/tvTextReceive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp_8"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Receive Text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

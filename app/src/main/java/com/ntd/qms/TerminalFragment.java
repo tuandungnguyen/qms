@@ -20,6 +20,7 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -431,12 +432,33 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
                         binding.layoutMainDisplay.setVisibility(View.GONE);
                         binding.tvPlace1.setSelected(true);
+                        binding.tvStatus.setSelected(true);
 
                         //Check android box with second param.
                         if (receiveStrings[1].equals("" + androidBoxID)) {
                             int param1 = Integer.parseInt(receiveStrings[3]);
                             int bitmaskA = 0x3FFF;
-                            binding.tvNumber.setText(Utils.formatQueueNumber((param1 & bitmaskA), 4));
+
+                            if (param1 > 0) {
+                                binding.tvStatus.setVisibility(View.GONE);
+                                binding.tvNumber.setVisibility(View.VISIBLE);
+                                binding.tvNumber.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down));
+                                binding.tvNumber.setText(Utils.formatQueueNumber((param1 & bitmaskA), 4));
+                            } else if (param1 == -3){
+                                binding.tvNumber.setVisibility(View.GONE);
+                                binding.tvStatus.setVisibility(View.VISIBLE);
+                                binding.tvStatus.setText(getText(R.string.status_pause));
+                            } else if (param1 == -6){
+                                binding.tvNumber.setVisibility(View.GONE);
+                                binding.tvStatus.setVisibility(View.VISIBLE);
+                                binding.tvStatus.setText(getText(R.string.status_welcome));
+                            } else if (param1 == -7){
+                                binding.tvNumber.setVisibility(View.GONE);
+                                binding.tvStatus.setVisibility(View.VISIBLE);
+                                binding.tvStatus.setText(getText(R.string.status_thankyou));
+                            }
+
+
                         }
 
                     } else if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) > 1) {

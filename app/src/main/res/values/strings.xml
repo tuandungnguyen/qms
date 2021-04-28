@@ -17,6 +17,10 @@
     <string name="miss_data_area">Vui lòng nhập dữ liệu cho Khu - Địa điểm</string>
     <string name="miss_data">Vui lòng nhập vào đầy đủ thông tin.</string>
 
+    <string name="status_pause">Tạm ngưng</string>
+    <string name="status_welcome">Kính chào</string>
+    <string name="status_thankyou">Cám ơn</string>
+
     <string name="calling_number">Số đang gọi</string>
     <string name="calling_room">Quầy</string>
     <string name="baud_rate">Baud Rate</string>
