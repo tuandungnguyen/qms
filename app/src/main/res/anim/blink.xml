@@ -4,9 +4,9 @@
     <alpha
         android:fromAlpha="1"
         android:toAlpha="0"
-        android:repeatCount="3"
+        android:repeatCount="4"
         android:repeatMode="reverse"
-        android:interpolator="@android:interpolator/linear"
+        android:interpolator="@android:interpolator/overshoot"
         android:duration="500"
         />
 </set>

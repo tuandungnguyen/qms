@@ -479,8 +479,10 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             int direction = (param2 >> 14) & 0x03;
 
                             OrderAndRoomItem item = new OrderAndRoomItem(queueNumber, direction, room);
-                            int finalRoom = room;
-                            listItem.removeIf(s -> s.getRoom() == finalRoom);
+                            int tmpRoom = room;
+                            int tmpQueueNumber = queueNumber;
+                            listItem.removeIf(s -> s.getRoom() == tmpRoom);
+                            listItem.removeIf(s -> s.getQueueNumber() == tmpQueueNumber);
                             listItem.add(item);
 
                             int maxItem = 3;
