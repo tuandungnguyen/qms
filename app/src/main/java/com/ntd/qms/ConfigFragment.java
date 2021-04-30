@@ -130,9 +130,8 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
             if (binding.edtAndroidBoxID.getText().toString().isEmpty()){
                 Toast.makeText(getActivity(), getString(R.string.miss_data_android_box), Toast.LENGTH_LONG).show();
-            } else if (binding.edtArea.getText().toString().isEmpty()){
-                Toast.makeText(getActivity(), getString(R.string.miss_data_area), Toast.LENGTH_LONG).show();
-            } else {
+            }
+            else {
                 try {
 
                     int androidBoxID = Integer.parseInt(binding.edtAndroidBoxID.getText().toString());

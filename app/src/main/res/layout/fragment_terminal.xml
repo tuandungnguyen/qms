@@ -164,7 +164,6 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_45"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -197,7 +196,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <TextView
+                <com.ntd.qms.view.ScrollTextView
                     android:id="@+id/tvStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -206,9 +205,6 @@
                     android:text="@string/status_welcome"
                     android:visibility="visible"
                     android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:scrollHorizontally="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -232,7 +228,6 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_45"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -270,7 +265,6 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:text="@string/sample_text"
-                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_45"
                     app:layout_constraintBottom_toBottomOf="parent"

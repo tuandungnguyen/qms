@@ -175,6 +175,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
             binding.layoutMainDisplay.setVisibility(View.GONE);
             binding.tvPlace1.setSelected(true);
+            binding.tvStatus.startScroll();
         }
 
         androidBoxID = prefs.getInt(MainActivity.KEY_DEVICE_ID, 1);
@@ -432,7 +433,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         binding.layoutCounterDisplay.setVisibility(View.VISIBLE);
                         binding.layoutMainDisplay.setVisibility(View.GONE);
                         binding.tvPlace1.setSelected(true);
-                        binding.tvStatus.setSelected(true);
 
                         //Check android box with second param.
                         if (receiveStrings[1].equals("" + androidBoxID)) {
