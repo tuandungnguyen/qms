@@ -40,8 +40,10 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
     private int maxLines = 1; //Default = 1 line
     private int maxColumns = 1; //Default = 1 column
     private int typeRoom = 0; //Default = 0
+    private boolean selectedUSBDevice;
 
     SharedPreferences prefs;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,7 +133,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             if (binding.edtAndroidBoxID.getText().toString().isEmpty()){
                 Toast.makeText(getActivity(), getString(R.string.miss_data_android_box), Toast.LENGTH_LONG).show();
             }
-            else {
+            else if (selectedUSBDevice){
                 try {
 
                     int androidBoxID = Integer.parseInt(binding.edtAndroidBoxID.getText().toString());
@@ -176,6 +178,10 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
 
         binding.btnCloseConfig.setOnClickListener(view -> {
+            if (!selectedUSBDevice)
+                return;
+            
+
             Bundle args = new Bundle();
             args.putInt("device", prefs.getInt(MainActivity.USB_DEVICE, 0));
             args.putInt("port", prefs.getInt(MainActivity.USB_PORT, 0));
@@ -246,7 +252,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             editor.putInt(MainActivity.USB_BAUD_RATE, baudRate);
             editor.putBoolean(MainActivity.USB_IO_MANAGER, withIoManager);
             editor.apply();
-
+            selectedUSBDevice = true;
             Toast.makeText(getActivity(), getString(R.string.selected_devices), Toast.LENGTH_SHORT).show();
         }
     }

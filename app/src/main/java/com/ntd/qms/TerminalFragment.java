@@ -1,8 +1,10 @@
 package com.ntd.qms;
 
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -360,6 +362,15 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         } catch (IOException ignored) {
         }
         usbSerialPort = null;
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.message_lost_connect)
+                .setPositiveButton(R.string.message_lost_connect_button, (dialog, id) -> {
+                    binding.btnMenuConfig.callOnClick();
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void send(String str) {
@@ -424,8 +435,15 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
                 String[] receiveStrings = receiveString.split(",");
 
+                //Hiden keys
+                if (receiveStrings[0].equals("0") && receiveStrings[1].equals("-99") & receiveStrings[2].equals("99")){
+                    binding.layoutCounterDisplay.setVisibility(View.GONE);
+                    binding.layoutMainDisplay.setVisibility(View.GONE);
+                    binding.layoutControlPanel.setVisibility(View.VISIBLE);
+                }
+
                 //Hien Thi
-                if (receiveStrings[0].equals("0") && receiveStrings[2].equals("103")) {
+                if (receiveStrings[0].equals("" + androidBoxID) || receiveStrings[0].equals("0") && receiveStrings[2].equals("103")) {
 
                     if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) == 1) {
 

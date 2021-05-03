@@ -19,7 +19,7 @@
 
     <string name="status_pause">Tạm ngưng</string>
     <string name="status_welcome">Kính chào</string>
-    <string name="status_thankyou">Cám ơn</string>
+    <string name="status_thankyou">&#160;&#160;Cảm ơn&#160;&#160;</string>
 
     <string name="calling_number">Số đang gọi</string>
     <string name="calling_room">Quầy</string>
@@ -35,5 +35,7 @@
     <string name="save_config">Lưu thông tin cấu hình</string>
     <string name="selected_devices">Đã chọn thiết bị</string>
 
+    <string name="message_lost_connect">Mất kết nối USB. Vui lòng thử lại</string>
+    <string name="message_lost_connect_button">Về trang Cấu hình</string>
 
 </resources>
