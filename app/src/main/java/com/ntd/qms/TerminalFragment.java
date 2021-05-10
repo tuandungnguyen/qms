@@ -289,10 +289,13 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     @Override
     public void onRunError(Exception e) {
         mainLooper.post(() -> {
-            status("connection lost: " + e.getMessage());
+            status("_connection lost: " + e.getMessage());
+            pauseBanner();
             disconnect();
         });
     }
+
+
 
     /*
      * Serial + UI
@@ -346,7 +349,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             connected = true;
             controlLines.start();
         } catch (Exception e) {
-            status("connection failed: " + e.getMessage());
+            status("Connection failed: " + e.getMessage());
             disconnect();
         }
     }
@@ -362,15 +365,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         } catch (IOException ignored) {
         }
         usbSerialPort = null;
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.message_lost_connect)
-                .setPositiveButton(R.string.message_lost_connect_button, (dialog, id) -> {
-                    binding.btnMenuConfig.callOnClick();
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
     }
 
     private void send(String str) {
@@ -405,7 +399,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         } catch (IOException e) {
             // when using read with timeout, USB bulkTransfer returns -1 on timeout _and_ errors
             // like connection loss, so there is typically no exception thrown here on error
-            status("connection lost: " + e.getMessage());
+            status("Connection lost: " + e.getMessage());
             disconnect();
         }
     }
@@ -415,6 +409,18 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         String dataString = binding.edtTestData.getText().toString();
         byte[] bs = dataString.getBytes();
         receive(bs);
+    }
+
+    private void pauseBanner() {
+        binding.bannerCounterDisplay.setBackgroundColor(getActivity().getColor(R.color.grey));
+        binding.footerCounterDisplay.setBackgroundColor(getActivity().getColor(R.color.grey));
+        binding.bannerMainDisplay.setBackgroundColor(getActivity().getColor(R.color.grey));
+    }
+
+    public void resumeBanner() {
+        binding.bannerCounterDisplay.setBackgroundColor(getActivity().getColor(R.color.blue));
+        binding.footerCounterDisplay.setBackgroundColor(getActivity().getColor(R.color.blue));
+        binding.bannerMainDisplay.setBackgroundColor(getActivity().getColor(R.color.blue));
     }
 
     private void receive(byte[] data) {
