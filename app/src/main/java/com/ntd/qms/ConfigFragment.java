@@ -222,6 +222,14 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             }
         }
 
+        if (listItems!=null && listItems.size()>0){
+            binding.btnSaveDeviceInfo.setClickable(true);
+            binding.btnSaveDeviceInfo.setBackgroundColor(getActivity().getColor(R.color.blue));
+        } else {
+            binding.btnSaveDeviceInfo.setClickable(true);
+            binding.btnSaveDeviceInfo.setBackgroundColor(getActivity().getColor(R.color.blue));
+        }
+
 
         ArrayAdapter<DeviceItem> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, listItems);
         adapter.setDropDownViewResource(R.layout.spinner_item);

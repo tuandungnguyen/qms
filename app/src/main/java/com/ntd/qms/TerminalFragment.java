@@ -308,6 +308,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 device = v;
         if (device == null) {
             status("connection failed: device not found");
+            Toast.makeText(getActivity(), "Lỗi kết nối thiết bị", Toast.LENGTH_SHORT).show();
+            binding.btnMenuConfig.callOnClick();
             return;
         }
         UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
