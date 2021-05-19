@@ -496,6 +496,10 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
                         try {
                             int param1 = Integer.parseInt(receiveStrings[3]);
+
+                            if (param1 <= 0)
+                                return;
+
                             int param2 = Integer.parseInt(receiveStrings[4]);
                             int bitmaskA = 0x3FFF;
                             int bitmaskB = 0x007F;
@@ -527,7 +531,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
                             if (listItem != null && listItem.size() > 0)
                                 orderAndRoomAdapter.notifyItemChanged(listItem.size() - 1);
-                            // orderAndRoomAdapter.notifyDataSetChanged();
 
 
                         } catch (Exception ex) {

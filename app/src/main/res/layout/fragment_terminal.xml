@@ -166,6 +166,7 @@
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_45"
+                    android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

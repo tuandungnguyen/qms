@@ -129,11 +129,29 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             }
         });
 
+        binding.btnCloseConfig.setOnClickListener(view -> {
+            if (!selectedUSBDevice){
+                Toast.makeText(getActivity(), "Chưa kết nối USB", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Bundle args = new Bundle();
+            args.putInt("device", prefs.getInt(MainActivity.USB_DEVICE, 0));
+            args.putInt("port", prefs.getInt(MainActivity.USB_PORT, 0));
+            args.putInt("baud", prefs.getInt(MainActivity.KEY_BAUD_RATE, 0));
+            args.putBoolean("withIoManager", withIoManager);
+            Fragment fragment = new TerminalFragment();
+            fragment.setArguments(args);
+            getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").commit();
+        });
+
         binding.btnSaveDeviceInfo.setOnClickListener(view1 -> {
             if (binding.edtAndroidBoxID.getText().toString().isEmpty()){
                 Toast.makeText(getActivity(), getString(R.string.miss_data_android_box), Toast.LENGTH_LONG).show();
             }
-            else if (selectedUSBDevice){
+            else if (!selectedUSBDevice) {
+                Toast.makeText(getActivity(), "Chưa kết nối USB", Toast.LENGTH_SHORT).show();
+            } else {
                 try {
 
                     int androidBoxID = Integer.parseInt(binding.edtAndroidBoxID.getText().toString());
@@ -157,8 +175,6 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                 } catch (Exception ex) {
                     Toast.makeText(getActivity(), "Error when parsing data", Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
 
@@ -177,20 +193,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         });
 
 
-        binding.btnCloseConfig.setOnClickListener(view -> {
-            if (!selectedUSBDevice)
-                return;
-            
 
-            Bundle args = new Bundle();
-            args.putInt("device", prefs.getInt(MainActivity.USB_DEVICE, 0));
-            args.putInt("port", prefs.getInt(MainActivity.USB_PORT, 0));
-            args.putInt("baud", prefs.getInt(MainActivity.KEY_BAUD_RATE, 0));
-            args.putBoolean("withIoManager", withIoManager);
-            Fragment fragment = new TerminalFragment();
-            fragment.setArguments(args);
-            getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").commit();
-        });
 
         return binding.getRoot();
     }
