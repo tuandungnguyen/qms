@@ -112,10 +112,13 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
-        deviceId = getArguments().getInt("device");
-        portNum = getArguments().getInt("port");
-        baudRate = getArguments().getInt("baud");
-        withIoManager = getArguments().getBoolean("withIoManager");
+
+        prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
+
+        deviceId = prefs.getInt(MainActivity.USB_DEVICE, 0);
+        portNum = prefs.getInt(MainActivity.USB_PORT, 0);
+        baudRate = prefs.getInt(MainActivity.USB_BAUD_RATE, 0);
+        withIoManager =  prefs.getBoolean(MainActivity.USB_IO_MANAGER, false);
     }
 
     @Override
@@ -123,8 +126,10 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         super.onResume();
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter(INTENT_ACTION_GRANT_USB));
 
-        if (usbPermission == UsbPermission.Unknown || usbPermission == UsbPermission.Granted)
+        if (usbPermission == UsbPermission.Unknown || usbPermission == UsbPermission.Granted){
             mainLooper.post(this::connect);
+        }
+
     }
 
     @Override
@@ -144,9 +149,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_terminal, container, false);
-
-        prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
-
 
         int maxColumn = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1);
         orderAndRoomAdapter = new OrderAndRoomAdapter(getActivity(), maxColumn);
@@ -220,7 +222,6 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         }
 
-
         return binding.getRoot();
     }
 
@@ -255,6 +256,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
           }
       }
   */
+
+
     /*
      * Serial
      */
@@ -307,10 +310,20 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             if (v.getDeviceId() == deviceId)
                 device = v;
         if (device == null) {
-            status("connection failed: device not found");
-            Toast.makeText(getActivity(), "Lỗi kết nối thiết bị", Toast.LENGTH_SHORT).show();
-            binding.btnMenuConfig.callOnClick();
-            return;
+
+            usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
+            for (UsbDevice v : usbManager.getDeviceList().values())
+                if (v.getDeviceId() == prefs.getInt(MainActivity.USB_DEVICE, 0)){
+                    device = v;
+                    Toast.makeText(getActivity(), "Đã kết nối lại USB", Toast.LENGTH_SHORT).show();
+                }
+
+            if (device == null){
+                status("connection failed: device not found");
+                Toast.makeText(getActivity(), "Lỗi kết nối thiết bị", Toast.LENGTH_SHORT).show();
+                //binding.btnMenuConfig.callOnClick();
+                return;
+            }
         }
         UsbSerialDriver driver = UsbSerialProber.getDefaultProber().probeDevice(device);
         if (driver == null) {

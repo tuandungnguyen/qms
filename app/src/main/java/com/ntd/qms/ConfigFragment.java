@@ -135,13 +135,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
                 return;
             }
 
-            Bundle args = new Bundle();
-            args.putInt("device", prefs.getInt(MainActivity.USB_DEVICE, 0));
-            args.putInt("port", prefs.getInt(MainActivity.USB_PORT, 0));
-            args.putInt("baud", prefs.getInt(MainActivity.KEY_BAUD_RATE, 0));
-            args.putBoolean("withIoManager", withIoManager);
             Fragment fragment = new TerminalFragment();
-            fragment.setArguments(args);
             getFragmentManager().beginTransaction().replace(R.id.fragment, fragment, "terminal").commit();
         });
 

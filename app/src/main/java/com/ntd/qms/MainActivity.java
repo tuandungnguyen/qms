@@ -3,6 +3,7 @@ package com.ntd.qms;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -80,7 +81,11 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             TerminalFragment terminal = (TerminalFragment)getSupportFragmentManager().findFragmentByTag("terminal");
             if (terminal != null){
                 terminal.status("USB device detected");
-                terminal.resumeBanner();
+                //terminal.resumeBanner();
+                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.detach(terminal);
+                ft.attach(terminal);
+                ft.commit();
             }
 
 
