@@ -44,7 +44,6 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
 
     SharedPreferences prefs;
 
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
@@ -186,20 +185,15 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             builder.create().show();
         });
 
-
-
-
         return binding.getRoot();
     }
-
-
 
     @Override
     public void onResume() {
         super.onResume();
         refresh();
+        selectedUSBDevice= true;
     }
-
 
     void refresh() {
         UsbManager usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
@@ -226,7 +220,6 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
             binding.btnSaveDeviceInfo.setClickable(true);
             binding.btnSaveDeviceInfo.setBackgroundColor(getActivity().getColor(R.color.blue));
         }
-
 
         ArrayAdapter<DeviceItem> adapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, listItems);
         adapter.setDropDownViewResource(R.layout.spinner_item);

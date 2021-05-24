@@ -34,13 +34,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-       /* DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-
-        Toast.makeText(this, "WxH="+dpWidth+"x"+dpHeight, Toast.LENGTH_LONG).show();*/
-
+   
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         getSupportFragmentManager().addOnBackStackChangedListener(this);
@@ -78,17 +72,12 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     @Override
     protected void onNewIntent(Intent intent) {
         if(intent.getAction().equals("android.hardware.usb.action.USB_DEVICE_ATTACHED")) {
+
             TerminalFragment terminal = (TerminalFragment)getSupportFragmentManager().findFragmentByTag("terminal");
             if (terminal != null){
                 terminal.status("USB device detected");
-                //terminal.resumeBanner();
-                final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.detach(terminal);
-                ft.attach(terminal);
-                ft.commit();
+               // terminal.onResume();
             }
-
-
         }
         super.onNewIntent(intent);
     }

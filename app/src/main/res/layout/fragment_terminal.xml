@@ -365,7 +365,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

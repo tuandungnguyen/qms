@@ -72,9 +72,6 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         }
     }
 
-
-
-
     @Override
     public OrderAndRoomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_order_and_room, parent, false);
@@ -161,7 +158,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         @Override
         public boolean areContentsTheSame(OrderAndRoomItem oldItem, OrderAndRoomItem newItem) {
-            return (oldItem.getQueueNumber() == newItem.getQueueNumber());
+            return (oldItem == newItem);
         }
     }
 
