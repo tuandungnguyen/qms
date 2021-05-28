@@ -61,7 +61,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
                     return BACKGROUND_WHITE;
                 else return BACKGROUND_GREY;
             } else {
-                if (ArrayUtils.contains(new int[]{0,1,4,5,8,9, 12,13}, position)){
+                if (ArrayUtils.contains(new int[]{0, 1, 4, 5, 8, 9, 12, 13}, position)) {
                     return BACKGROUND_GREY;
                 } else {
                     return BACKGROUND_WHITE;
@@ -102,7 +102,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         holder.tvRoomName.setText(String.valueOf(item.getRoom()));
 
-        if (getItemCount() > 0 && position == getItemCount() - 1){
+        if (getItemCount() > 0 && position == getItemCount() - 1) {
             holder.tvOrder.setAnimation(AnimationUtils.loadAnimation(context, R.anim.blink));
             holder.tvRoomName.setAnimation(AnimationUtils.loadAnimation(context, R.anim.blink));
         }
@@ -158,7 +158,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
         @Override
         public boolean areContentsTheSame(OrderAndRoomItem oldItem, OrderAndRoomItem newItem) {
-            return (oldItem == newItem);
+            return (oldItem.getDirection() == newItem.getDirection()) && (oldItem.getQueueNumber() == newItem.getDirection());
         }
     }
 
