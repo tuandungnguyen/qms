@@ -520,7 +520,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             listItem.removeIf(s -> s.getQueueNumber() == tmpQueueNumber);
                             listItem.add(item);
 
-                            /*
+
                             int maxItem = 3;
                             try {
                                 maxItem = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) * prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
@@ -528,7 +528,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             }
 
                             if (listItem.size() > maxItem)
-                                listItem.remove(0);*/
+                                listItem.remove(0);
 
                             ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                             newListItem.addAll(listItem);
