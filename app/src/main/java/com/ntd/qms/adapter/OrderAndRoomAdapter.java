@@ -140,10 +140,6 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         return listItems.getCurrentList().size();
     }
 
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
-    }
 
     public AsyncListDiffer<OrderAndRoomItem> getDiffer() {
         return listItems;

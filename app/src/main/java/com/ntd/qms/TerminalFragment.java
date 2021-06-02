@@ -32,6 +32,7 @@ import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.encoders.annotations.Encodable;
@@ -88,6 +89,23 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
     boolean getdata = false;
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    private Handler handlerRemover;
+    private Runnable removeRunner = new Runnable() {
+        @Override
+        public void run() {
+            int maxItem = 3;
+            try {
+                maxItem = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) * prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
+            } catch (Exception ignored) {
+            }
+
+            if (listItem.size() > maxItem){
+                listItem.remove(0);
+                ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>(listItem);
+                orderAndRoomAdapter.getDiffer().submitList(newListItem);
+            }
+        }
+    };
 
     public TerminalFragment() {
         broadcastReceiver = new BroadcastReceiver() {
@@ -116,6 +134,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         portNum = prefs.getInt(MainActivity.USB_PORT, 0);
         baudRate = prefs.getInt(MainActivity.USB_BAUD_RATE, 0);
         withIoManager = prefs.getBoolean(MainActivity.USB_IO_MANAGER, false);
+        handlerRemover = new Handler(Looper.getMainLooper());
     }
 
     @Override
@@ -140,6 +159,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
         getActivity().unregisterReceiver(broadcastReceiver);
         super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        handlerRemover.removeCallbacks(removeRunner);
     }
 
     /*
@@ -313,7 +338,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         if (device == null) {
             status("connection failed: device not found");
             Toast.makeText(getActivity(), "Lỗi kết nối thiết bị", Toast.LENGTH_SHORT).show();
-          // binding.btnMenuConfig.callOnClick();
+            // binding.btnMenuConfig.callOnClick();
             return;
         }
 
@@ -520,23 +545,17 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             listItem.removeIf(s -> s.getQueueNumber() == tmpQueueNumber);
                             listItem.add(item);
 
-
-                            int maxItem = 3;
-                            try {
-                                maxItem = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) * prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
-                            } catch (Exception ignored) {
-                            }
-
-                            if (listItem.size() > maxItem)
-                                listItem.remove(0);
-
                             ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                             newListItem.addAll(listItem);
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
+                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                            binding.rcvOrders.smoothScrollToPosition(listItem.size() - 1);
 
-                            if (listItem != null && listItem.size() > 0)
-                                orderAndRoomAdapter.notifyItemChanged(listItem.size() - 1);
-
+                                }
+                            },200);
+                            handlerRemover.postDelayed(removeRunner, 650);
 
                         } catch (Exception ex) {
                             Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
