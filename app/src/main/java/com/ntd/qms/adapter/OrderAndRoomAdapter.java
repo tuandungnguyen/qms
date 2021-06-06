@@ -53,6 +53,9 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         this.typeColumn = mTypeColumn;
     }
 
+
+    
+
     @Override
     public int getItemViewType(int position) {
         try {
@@ -139,7 +142,6 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
     public int getItemCount() {
         return listItems.getCurrentList().size();
     }
-
 
     public AsyncListDiffer<OrderAndRoomItem> getDiffer() {
         return listItems;
