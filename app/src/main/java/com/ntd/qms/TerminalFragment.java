@@ -89,6 +89,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
     boolean getdata = false;
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
     private Handler handlerRemover;
     private Runnable removeRunner = new Runnable() {
         @Override
@@ -154,6 +155,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     @Override
     public void onPause() {
         if (connected) {
+            status("disconnected");
             status("disconnected");
             disconnect();
         }
@@ -548,14 +550,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                             newListItem.addAll(listItem);
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
-                            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                            binding.rcvOrders.smoothScrollToPosition(listItem.size() - 1);
-
-                                }
-                            },200);
-                            handlerRemover.postDelayed(removeRunner, 650);
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> binding.rcvOrders.smoothScrollToPosition(listItem.size() - 1),500);
+                            handlerRemover.postDelayed(removeRunner, 500);
 
                         } catch (Exception ex) {
                             Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
