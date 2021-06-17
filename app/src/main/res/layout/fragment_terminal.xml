@@ -151,7 +151,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bannerCounterDisplay"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_64"
+                android:layout_height="@dimen/dp_100"
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -252,7 +252,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bannerMainDisplay"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_64"
+                android:layout_height="@dimen/dp_100"
                 android:background="@color/blue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

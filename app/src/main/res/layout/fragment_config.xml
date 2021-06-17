@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/tvConfigHeader"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_64"
+            android:layout_height="@dimen/dp_100"
             android:background="@color/colorHeader"
             android:gravity="center"
             android:text="@string/config"
