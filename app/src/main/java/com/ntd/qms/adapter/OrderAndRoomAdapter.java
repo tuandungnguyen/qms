@@ -58,13 +58,14 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
 
     @Override
     public int getItemViewType(int position) {
+        int number = getDiffer().getCurrentList().get(position).getQueueNumber();
         try {
             if (typeColumn == TYPE_1_COLUMN) {
-                if (position % 2 == 1)
+                if (number % 2 == 1)
                     return BACKGROUND_WHITE;
                 else return BACKGROUND_GREY;
             } else {
-                if (ArrayUtils.contains(new int[]{0, 1, 4, 5, 8, 9, 12, 13}, position)) {
+                if (ArrayUtils.contains(new int[]{0, 1, 4, 5, 8, 9, 12, 13}, number)) {
                     return BACKGROUND_GREY;
                 } else {
                     return BACKGROUND_WHITE;
