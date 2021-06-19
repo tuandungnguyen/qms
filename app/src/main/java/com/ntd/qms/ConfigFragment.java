@@ -246,6 +246,8 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
         } else {
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt(MainActivity.USB_DEVICE, item.getDevice().getDeviceId());
+            editor.putInt(MainActivity.USB_DEVICE_VENDOR, item.getDevice().getVendorId());
+            editor.putString(MainActivity.USB_DEVICE_PRODUCE_NAME, item.getDevice().getProductName());
             editor.putInt(MainActivity.USB_PORT, item.getPort());
             editor.putInt(MainActivity.USB_BAUD_RATE, baudRate);
             editor.putBoolean(MainActivity.USB_IO_MANAGER, withIoManager);

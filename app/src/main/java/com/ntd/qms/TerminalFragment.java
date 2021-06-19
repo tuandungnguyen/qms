@@ -65,7 +65,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private static final int WRITE_WAIT_MILLIS = 2000;
     private static final int READ_WAIT_MILLIS = 2000;
 
-    private int deviceId, portNum, baudRate;
+    private int deviceId, portNum, baudRate, deviceVendorId;
+    private String deviceProductName;
     private boolean withIoManager;
 
     private int androidBoxID;
@@ -132,6 +133,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         prefs = getActivity().getSharedPreferences(MainActivity.MY_PREFS_NAME, MODE_PRIVATE);
 
         deviceId = prefs.getInt(MainActivity.USB_DEVICE, 0);
+        deviceVendorId = prefs.getInt(MainActivity.USB_DEVICE_VENDOR, 0);
+        deviceProductName = prefs.getString(MainActivity.USB_DEVICE_PRODUCE_NAME, "");
         portNum = prefs.getInt(MainActivity.USB_PORT, 0);
         baudRate = prefs.getInt(MainActivity.USB_BAUD_RATE, 0);
         withIoManager = prefs.getBoolean(MainActivity.USB_IO_MANAGER, false);
@@ -332,14 +335,20 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         UsbDevice device = null;
         UsbManager usbManager = (UsbManager) getActivity().getSystemService(Context.USB_SERVICE);
 
-        for (UsbDevice v : usbManager.getDeviceList().values()) {
+        /*for (UsbDevice v : usbManager.getDeviceList().values()) {
             if (v.getDeviceId() == deviceId)
+                device = v;
+        }*/
+
+        for (UsbDevice v : usbManager.getDeviceList().values()) {
+            if (v.getVendorId() == deviceVendorId && v.getProductName().equals(deviceProductName))
                 device = v;
         }
 
+
         if (device == null) {
             status("connection failed: device not found");
-            Toast.makeText(getActivity(), "Lỗi kết nối thiết bị", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Lỗi kết nối thiết bị ", Toast.LENGTH_SHORT).show();
             // binding.btnMenuConfig.callOnClick();
             return;
         }
@@ -380,6 +389,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 Executors.newSingleThreadExecutor().submit(usbIoManager);
             }
             status("connected");
+            resumeBanner();
             connected = true;
             controlLines.start();
         } catch (Exception e) {

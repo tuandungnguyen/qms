@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public static final String USB_PORT = "port";
     public static final String USB_BAUD_RATE = "baud";
     public static final String USB_IO_MANAGER = "withIoManager";
+    public static final String USB_DEVICE_VENDOR = "device_vendor";
+    public static final String USB_DEVICE_PRODUCE_NAME = "device_product_name";
 
 
     @Override
