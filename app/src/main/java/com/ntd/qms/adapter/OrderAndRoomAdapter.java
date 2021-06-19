@@ -65,7 +65,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
                     return BACKGROUND_WHITE;
                 else return BACKGROUND_GREY;
             } else {
-                if (ArrayUtils.contains(new int[]{0, 1, 4, 5, 8, 9, 12, 13}, number)) {
+                if (ArrayUtils.contains(new int[]{0, 1, 4, 5, 8, 9, 12, 13}, position)) {
                     return BACKGROUND_GREY;
                 } else {
                     return BACKGROUND_WHITE;
