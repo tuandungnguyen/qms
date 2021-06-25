@@ -165,13 +165,15 @@
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_45"
+                    android:textSize="@dimen/sp_64"
                     android:textAllCaps="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/sample_text" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -267,7 +269,7 @@
                     android:singleLine="true"
                     android:text="@string/sample_text"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/sp_45"
+                    android:textSize="@dimen/sp_64"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -359,6 +361,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tvTextReceive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_8"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Receive Text" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/test_box"
             android:layout_width="match_parent"
@@ -388,19 +402,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnSendTestData"
                 app:layout_constraintTop_toTopOf="@+id/btnSendTestData" />
-
-
-            <TextView
-                android:id="@+id/tvTextReceive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp_8"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Receive Text" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
