@@ -479,14 +479,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private void receive(byte[] data) {
         String receiveString = HexDump.bytesToString(data);
 
-        if (receiveString.equals("1,1,103,5,0,1B")){
+       /* if (receiveString.equals("1,1,103,5,0,1B")){
             receiveString = "1,9,103,5,0,1B";
-        }
+        }*/
 
         String last2Char = receiveString.substring(receiveString.length() - 2);
         int receiveCheckSum = Integer.parseInt(last2Char, 16);
-
-
 
         binding.tvTextReceive.setText("Received: " + receiveString);
 
@@ -499,20 +497,17 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
                 try {
 
-                    String prefix1 = "0," + androidBoxID;
-                    String prefix2 = "1," + androidBoxID;
+                    String prefix1 = "0," + androidBoxID + ",103";
+                    String prefix2 = "1," + androidBoxID + ",103";
 
-                    String temp1 = prefix1 + receiveString.substring(receiveString.indexOf(",103,"));
-                    String temp2 = prefix2 + receiveString.substring(receiveString.indexOf(",103,"));
+                    String temp1 = prefix1 + receiveString.substring(Utils.ordinalIndexOf(receiveString, ",", 3));
+                    String temp2 = prefix2 + receiveString.substring(Utils.ordinalIndexOf(receiveString, ",", 3));
 
                     FirebaseCrashlytics.getInstance().setCustomKey("receiveString", receiveString);
-
 
                     String deletedLast2Char1 = temp1.substring(0, temp1.length() - 2);
                     String deletedLast2Char2 = temp2.substring(0, temp2.length() - 2);
 
-                    FirebaseCrashlytics.getInstance().setCustomKey("deletedLast2Char1", deletedLast2Char1);
-                    FirebaseCrashlytics.getInstance().setCustomKey("deletedLast2Char2", deletedLast2Char2);
 
                     if (checksum(deletedLast2Char1).intValue() == receiveCheckSum) {
                         binding.tvTextReceive.setText("Received: " + receiveString + " - Fix as: " + temp1);
