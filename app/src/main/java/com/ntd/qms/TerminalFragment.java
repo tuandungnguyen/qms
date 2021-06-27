@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.encoders.annotations.Encodable;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
@@ -101,7 +102,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             } catch (Exception ignored) {
             }
 
-            if (listItem.size() > maxItem){
+            if (listItem.size() > maxItem) {
                 listItem.remove(0);
                 ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>(listItem);
                 orderAndRoomAdapter.getDiffer().submitList(newListItem);
@@ -345,7 +346,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 device = v;
         }
 
-        
+
         if (device == null) {
             status("connection failed: device not found");
             Toast.makeText(getActivity(), "Lỗi kết nối thiết bị ", Toast.LENGTH_SHORT).show();
@@ -467,10 +468,68 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         binding.bannerMainDisplay.setBackgroundColor(getActivity().getColor(R.color.blue));
     }
 
+    private Byte checksum(String s) {
+        int tmp = 0;
+        for (char c : s.toCharArray()) {
+            tmp = tmp ^ (int) c;
+        }
+        return (byte) tmp;
+    }
+
     private void receive(byte[] data) {
         String receiveString = HexDump.bytesToString(data);
 
-        binding.tvTextReceive.setText("Receive Text: " + receiveString);
+        if (receiveString.equals("1,1,103,5,0,1B")){
+            receiveString = "1,9,103,5,0,1B";
+        }
+
+        String last2Char = receiveString.substring(receiveString.length() - 2);
+        int receiveCheckSum = Integer.parseInt(last2Char, 16);
+
+
+
+        binding.tvTextReceive.setText("Received: " + receiveString);
+
+        if (receiveString.length() > 2 && receiveString.contains(",")) {
+
+            String deletedLast2Char = receiveString.substring(0, receiveString.length() - 2);
+
+            if (checksum(deletedLast2Char).intValue() != receiveCheckSum) {
+                // binding.tvTextReceive.setVisibility(View.VISIBLE);
+
+                try {
+
+                    String prefix1 = "0," + androidBoxID;
+                    String prefix2 = "1," + androidBoxID;
+
+                    String temp1 = prefix1 + receiveString.substring(receiveString.indexOf(",103,"));
+                    String temp2 = prefix2 + receiveString.substring(receiveString.indexOf(",103,"));
+
+                    FirebaseCrashlytics.getInstance().setCustomKey("receiveString", receiveString);
+
+
+                    String deletedLast2Char1 = temp1.substring(0, temp1.length() - 2);
+                    String deletedLast2Char2 = temp2.substring(0, temp2.length() - 2);
+
+                    FirebaseCrashlytics.getInstance().setCustomKey("deletedLast2Char1", deletedLast2Char1);
+                    FirebaseCrashlytics.getInstance().setCustomKey("deletedLast2Char2", deletedLast2Char2);
+
+                    if (checksum(deletedLast2Char1).intValue() == receiveCheckSum) {
+                        binding.tvTextReceive.setText("Received: " + receiveString + " - Fix as: " + temp1);
+                        receiveString = temp1;
+                    }
+
+                    if (checksum(deletedLast2Char2).intValue() == receiveCheckSum) {
+                        binding.tvTextReceive.setText("Received: " + receiveString + " - Fix as: " + temp2);
+                        receiveString = temp2;
+                    }
+                } catch (Exception ex){
+                    Toast.makeText(getActivity(), "Error miss data: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            } else {
+                //binding.tvTextReceive.setVisibility(View.GONE);
+            }
+        }
 
        /* SpannableStringBuilder spn = new SpannableStringBuilder();
         spn.append("receive " + data.length + " bytes\n");
@@ -560,7 +619,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                             newListItem.addAll(listItem);
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
-                            new Handler(Looper.getMainLooper()).postDelayed(() -> binding.rcvOrders.smoothScrollToPosition(listItem.size() - 1),500);
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> binding.rcvOrders.smoothScrollToPosition(listItem.size() - 1), 500);
                             handlerRemover.postDelayed(removeRunner, 500);
 
                         } catch (Exception ex) {
