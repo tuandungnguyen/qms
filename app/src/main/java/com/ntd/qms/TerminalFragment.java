@@ -484,7 +484,12 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }*/
 
         String last2Char = receiveString.substring(receiveString.length() - 2);
-        int receiveCheckSum = Integer.parseInt(last2Char, 16);
+        int receiveCheckSum;
+        try {
+            receiveCheckSum = Integer.parseInt(last2Char, 16);
+        } catch (Exception ex){
+            return;
+        }
 
         binding.tvTextReceive.setText("Received: " + receiveString);
 
