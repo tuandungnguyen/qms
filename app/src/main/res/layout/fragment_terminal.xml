@@ -9,6 +9,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Original source code of library-->
         <LinearLayout
             android:id="@+id/layoutControlPanel"
             android:layout_width="match_parent"
@@ -138,6 +139,7 @@
 
         </LinearLayout>
 
+        <!-- Counter Display-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutCounterDisplay"
             android:layout_width="match_parent"
@@ -242,6 +244,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <!-- Main Display-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutMainDisplay"
             android:layout_width="match_parent"
@@ -350,7 +353,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <!-- Overlay button for switching Config and Display screen-->
         <View
             android:id="@+id/btnMenuConfig"
             android:layout_width="0dp"
@@ -361,6 +364,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Receive text view for debug-->
         <TextView
             android:id="@+id/tvTextReceive"
             android:layout_width="wrap_content"
@@ -373,13 +377,14 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Receive Text" />
 
+        <!-- Test box-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/test_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

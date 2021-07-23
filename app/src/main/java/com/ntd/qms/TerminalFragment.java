@@ -1,17 +1,14 @@
 package com.ntd.qms;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -28,15 +25,12 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.encoders.annotations.Encodable;
 import com.hoho.android.usbserial.driver.UsbSerialDriver;
 import com.hoho.android.usbserial.driver.UsbSerialPort;
 import com.hoho.android.usbserial.driver.UsbSerialProber;
@@ -189,7 +183,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
 
         listItem = new ArrayList<>();
 
-        binding.receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
+        binding.receiveText.setTextColor(getResources().getColor(R.color.colorReceiveText)); // set as default color to reduce number of spans
         binding.receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         binding.sendBtn.setOnClickListener(v -> send(binding.sendText.getText().toString()));
@@ -554,6 +548,8 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                 //Hien Thi
                 if (receiveStrings[0].equals("" + androidBoxID) || receiveStrings[0].equals("0") && receiveStrings[2].equals("103")) {
 
+                    //STXsID,rID,cmd,param1,param2,csETX
+
                     if (prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1) == 1) {
 
                         //Counter Display
@@ -574,14 +570,17 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             } else if (param1 == -3) {
                                 binding.tvNumber.setVisibility(View.GONE);
                                 binding.tvStatus.setVisibility(View.VISIBLE);
+                                binding.tvStatus.startScroll();
                                 binding.tvStatus.setText(getText(R.string.status_pause));
                             } else if (param1 == -6) {
                                 binding.tvNumber.setVisibility(View.GONE);
                                 binding.tvStatus.setVisibility(View.VISIBLE);
+                                binding.tvStatus.startScroll();
                                 binding.tvStatus.setText(getText(R.string.status_welcome));
                             } else if (param1 == -7) {
                                 binding.tvNumber.setVisibility(View.GONE);
                                 binding.tvStatus.setVisibility(View.VISIBLE);
+                                binding.tvStatus.startScroll();
                                 binding.tvStatus.setText(getText(R.string.status_thankyou));
                             }
 

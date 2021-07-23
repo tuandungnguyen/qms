@@ -192,7 +192,7 @@ public class ConfigFragment extends Fragment implements DeviceAdapter.ClickListe
     public void onResume() {
         super.onResume();
         refresh();
-        //selectedUSBDevice= true;
+        selectedUSBDevice= true;
     }
 
     void refresh() {

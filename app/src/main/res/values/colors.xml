@@ -12,7 +12,7 @@
     <color name="colorPrimaryDark">#022cff</color>
     <color name="colorAccent">#022cff</color>
 
-    <color name="colorRecieveText">#00FF00</color>
+    <color name="colorReceiveText">#00FF00</color>
     <color name="colorSendText">#82CAFF</color>
     <color name="colorStatusText">#FFDB58</color>
 
@@ -27,7 +27,7 @@
     <color name="blue">#022cff</color>
 
     <color name="grey">#706F6F</color>
-    <color name="light_grey">#E1E0E0</color>
+    <color name="light_grey">#FAFAFA</color>
     <color name="dark_grey">#BCBABA</color>
 
 </resources>

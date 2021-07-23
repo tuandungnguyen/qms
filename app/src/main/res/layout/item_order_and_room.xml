@@ -23,9 +23,6 @@
         android:contentDescription="Direction" />
 
 
-
-
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOrder"
         android:layout_width="0dp"
