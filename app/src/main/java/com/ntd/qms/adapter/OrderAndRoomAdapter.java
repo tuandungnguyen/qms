@@ -54,7 +54,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
     }
 
 
-    @Override
+  /*  @Override
     public int getItemViewType(int position) {
         int number = getDiffer().getCurrentList().get(position).getQueueNumber();
         try {
@@ -72,7 +72,7 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         } catch (Exception ex) {
             return BACKGROUND_WHITE;
         }
-    }
+    }*/
 
     @Override
     public OrderAndRoomAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -83,11 +83,11 @@ public class OrderAndRoomAdapter extends RecyclerView.Adapter<OrderAndRoomAdapte
         int lines = prefs.getInt(MainActivity.KEY_LINE_NUMBER, 3);
         lp.height = parent.getMeasuredHeight() / lines;
         itemView.setLayoutParams(lp);
-
+/*
         if (viewType == BACKGROUND_WHITE)
             itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_grey));
         else
-            itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_grey));
+            itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_grey));*/
 
         return new ViewHolder(itemView);
     }

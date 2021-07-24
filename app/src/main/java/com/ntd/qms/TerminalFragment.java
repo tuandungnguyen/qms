@@ -6,9 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,12 +23,14 @@ import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -59,6 +65,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
     private static final String INTENT_ACTION_GRANT_USB = BuildConfig.APPLICATION_ID + ".GRANT_USB";
     private static final int WRITE_WAIT_MILLIS = 2000;
     private static final int READ_WAIT_MILLIS = 2000;
+
 
     private int deviceId, portNum, baudRate, deviceVendorId;
     private String deviceProductName;
@@ -245,6 +252,17 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         } catch (Exception ignored) {
 
         }
+
+        ViewTreeObserver vto = binding.backgroundOrders.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @Override
+            public void onGlobalLayout() {
+                generateBackground();
+                ViewTreeObserver obs = binding.backgroundOrders.getViewTreeObserver();
+                obs.removeOnGlobalLayoutListener(this);
+            }
+        });
 
         return binding.getRoot();
     }
@@ -481,7 +499,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         int receiveCheckSum;
         try {
             receiveCheckSum = Integer.parseInt(last2Char, 16);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             return;
         }
 
@@ -517,7 +535,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                         binding.tvTextReceive.setText("Received: " + receiveString + " - Fix as: " + temp2);
                         receiveString = temp2;
                     }
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     Toast.makeText(getActivity(), "Error miss data: " + ex.getMessage(), Toast.LENGTH_LONG).show();
                 }
             } else {
@@ -633,6 +651,28 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
         }
 
 
+    }
+
+    private void generateBackground() {
+
+        int row = prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
+
+        int height = binding.backgroundOrders.getHeight() / row;
+        int width = binding.backgroundOrders.getWidth();
+
+        for (int i = 0; i < row; i++) {
+            View view = new View(getActivity());
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(width, height);
+
+            if (i % 2 == 0)
+                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.light_grey));
+            else
+                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.dark_grey));
+
+            view.setLayoutParams(params);
+
+            binding.backgroundOrders.addView(view);
+        }
     }
 
     public void status(String str) {
