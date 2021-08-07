@@ -632,12 +632,30 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
                             listItem.removeIf(s -> s.getRoom() == tmpRoom);
                             listItem.removeIf(s -> s.getQueueNumber() == tmpQueueNumber);
                             listItem.add(item);
-
+/*
                             ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
                             newListItem.addAll(listItem);
                             orderAndRoomAdapter.getDiffer().submitList(newListItem);
                             new Handler(Looper.getMainLooper()).postDelayed(() -> binding.rcvOrders.smoothScrollToPosition(listItem.size() - 1), 500);
-                            handlerRemover.postDelayed(removeRunner, 500);
+                            handlerRemover.postDelayed(removeRunner, 500);*/
+
+
+                            int maxItem = 3;
+                            try {
+                                maxItem = prefs.getInt(MainActivity.KEY_COLUMN_NUMBER, 1) * prefs.getInt(MainActivity.KEY_LINE_NUMBER, 1);
+                            } catch (Exception ignored) {
+                            }
+
+                            if (listItem.size() > maxItem) {
+                                listItem.remove(0);
+                            }
+
+                            ArrayList<OrderAndRoomItem> newListItem = new ArrayList<>();
+                            newListItem.addAll(listItem);
+
+                            orderAndRoomAdapter.getDiffer().submitList(newListItem);
+                            if (listItem != null && listItem.size() > 0)
+                                orderAndRoomAdapter.notifyItemChanged(listItem.size() - 1);
 
                         } catch (Exception ex) {
                             Toast.makeText(getActivity(), ex.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -665,9 +683,9 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(width, height);
 
             if (i % 2 == 0)
-                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.light_grey));
-            else
                 view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.dark_grey));
+            else
+                view.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.light_grey));
 
             view.setLayoutParams(params);
 
