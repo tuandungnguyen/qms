@@ -37,5 +37,6 @@
 
     <string name="message_lost_connect">Mất kết nối USB. Vui lòng thử lại</string>
     <string name="message_lost_connect_button">Về trang Cấu hình</string>
+    <string name="app_version">Q-tech. Ver 1.0.170821</string>
 
 </resources>
