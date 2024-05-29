@@ -326,7 +326,7 @@ public class TerminalFragment extends Fragment implements SerialInputOutputManag
             }
 
             // receive(data);
-            //  Toast.makeText(getActivity(), "getData " + HexDump.bytesToString(data), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "getData " + HexDump.bytesToString(data), Toast.LENGTH_SHORT).show();
 
         });
     }

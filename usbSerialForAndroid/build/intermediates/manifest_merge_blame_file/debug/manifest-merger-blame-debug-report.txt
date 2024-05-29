@@ -2,10 +2,7 @@
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 3    package="com.hoho.android.usbserial" >
 4
-5    <uses-sdk
-6        android:minSdkVersion="17"
-6-->D:\Coding\AndroidProject\usbSerialForAndroid\src\main\AndroidManifest.xml
-7        android:targetSdkVersion="29" />
-7-->D:\Coding\AndroidProject\usbSerialForAndroid\src\main\AndroidManifest.xml
-8
-9</manifest>
+5    <uses-sdk android:minSdkVersion="17" />
+5-->D:\Coding\workspace\qms\usbSerialForAndroid\src\main\AndroidManifest.xml
+6
+7</manifest>
